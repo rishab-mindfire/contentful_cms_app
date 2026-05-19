@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+#https certificate
+/certificates/
+
 # production
 /build
 
@@ -39,3 +42,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+certificates
+
+/lib/generated/prisma
