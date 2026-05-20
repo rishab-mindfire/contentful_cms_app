@@ -6,19 +6,10 @@
     "dev": "next dev --experimental-https",
     "build": "cross-env NODE_ENV=production next build",
     "start": "cross-env NODE_ENV=production next start",
-    "lint": "eslint .",
+    "lint": "next lint",
     "format": "prettier --write .",
     "check": "prettier --check .",
     "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write"
-    ]
   },
   "dependencies": {
     "@next/env": "^16.2.6",
