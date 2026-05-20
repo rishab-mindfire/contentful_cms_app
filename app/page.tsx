@@ -1,30 +1,29 @@
-import Link from "next/link";
-
+import Link from 'next/link';
+// dashboard page
 export default function Home() {
   return (
     <div className="min-h-screen from-blue-50 via-white to-indigo-50">
-
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Contentful cms
-            {/* <span className="block text-indigo-600">Landing page</span> */}
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Public product website with authentication, CMS-driven content, and a basic dashboard to promote any web application.
+            Public product website with authentication, CMS-driven content, and a basic dashboard to
+            promote any web application.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/auth"
-              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+              className="btn-primary"
             >
               sign in
             </Link>
             <Link
               href="/dashboard"
-              className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+              className="btn-secondary"
             >
               View Dashboard
             </Link>
@@ -33,7 +32,7 @@ export default function Home() {
 
         {/* Features Grid */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
+          <div className="feature-card">
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
               <svg
                 className="w-6 h-6 text-blue-600"
@@ -49,17 +48,10 @@ export default function Home() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Blog post
-            </h3>
-            {/* <p className="text-gray-600">
-              Seamlessly authenticate users with Google, GitHub, and other
-              popular social providers. No need to manage passwords or worry
-              about security.
-            </p> */}
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">Blog post</h3>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
+          <div className="feature-card">
             <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
               <svg
                 className="w-6 h-6 text-green-600"
@@ -75,16 +67,10 @@ export default function Home() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Email & Password
-            </h3>
-            {/* <p className="text-gray-600">
-              Traditional email and password authentication with secure password
-              hashing, email verification, and password reset functionality.
-            </p> */}
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">Email & Password</h3>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
+          <div className="feature-card">
             <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
               <svg
                 className="w-6 h-6 text-purple-600"
@@ -100,54 +86,10 @@ export default function Home() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              Dynamic content
-            </h3>
-            {/* <p className="text-gray-600">
-              Built-in security features including JWT tokens, session
-              management, and protected routes that only authenticated users can
-              access.
-            </p> */}
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">Dynamic content</h3>
           </div>
         </div>
-
-
-        {/* footer section for landing page */}
-
-<footer className="bg-gray-900 text-white py-12 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-
-            <div className="flex justify-center space-x-6">
-              <Link
-                href="/"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                href="/auth"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                Sign in
-              </Link>
-              <Link
-                href="/dashboard"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                Dashboard
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
-
-
-
-
-
       </main>
-
 
     </div>
   );
