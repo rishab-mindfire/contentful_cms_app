@@ -1,6 +1,6 @@
-"use client";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+'use client';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function DashboardClientPage() {
   const router = useRouter();
@@ -8,7 +8,7 @@ export default function DashboardClientPage() {
   // Redirect to auth if not authenticated
 
   const handleSignOut = async () => {
-    alert("Signed out");
+    alert('Signed out');
   };
 
   return (
@@ -22,16 +22,14 @@ export default function DashboardClientPage() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   Welcome to Your Dashboard!
                 </h2>
-                <p className="text-gray-600">
-                  Manage your account and explore app features
-                </p>
+                <p className="text-gray-600">Manage your account and explore app features</p>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-3">
                   <img
                     className="h-10 w-10 rounded-full"
                     src={
-                      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+                      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
                     }
                   />
                   <div className="text-sm">
@@ -43,16 +41,14 @@ export default function DashboardClientPage() {
                   onClick={handleSignOut}
                   className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
                 >
-                  Sign Out
+                  Sign Outrrr
                 </button>
               </div>
             </div>
 
             {/* Authentication Info */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-              <h3 className="text-lg font-medium text-blue-900 mb-2">
-                Authentication Status
-              </h3>
+              <h3 className="text-lg font-medium text-blue-900 mb-2">Authentication Status</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <span className="font-medium text-blue-700">Status:</span>
@@ -69,9 +65,7 @@ export default function DashboardClientPage() {
                   <span className="ml-2 text-blue-600">1234566</span>
                 </div>
                 <div>
-                  <span className="font-medium text-blue-700">
-                    Email Verified:
-                  </span>
+                  <span className="font-medium text-blue-700">Email Verified:</span>
                   <span className="ml-2 text-blue-600">Yes</span>
                 </div>
               </div>
@@ -95,12 +89,9 @@ export default function DashboardClientPage() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  Social Login
-                </h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">Social Login</h3>
                 <p className="text-gray-600 text-sm">
-                  Seamlessly authenticate with Google, GitHub, and other social
-                  providers.
+                  Seamlessly authenticate with Google, GitHub, and other social providers.
                 </p>
               </div>
 
@@ -120,9 +111,7 @@ export default function DashboardClientPage() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  User Management
-                </h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">User Management</h3>
                 <p className="text-gray-600 text-sm">
                   Manage user accounts, profiles, and authentication settings.
                 </p>
@@ -144,36 +133,31 @@ export default function DashboardClientPage() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  Secure Access
-                </h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">Secure Access</h3>
                 <p className="text-gray-600 text-sm">
-                  Protected routes and secure authentication flow with
-                  app.
+                  Protected routes and secure authentication flow with app.
                 </p>
               </div>
             </div>
 
             {/* Demo Actions */}
             <div className="mt-8 p-6 bg-gray-50 rounded-lg">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
-                Try These Actions
-              </h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Try These Actions</h3>
               <div className="flex flex-wrap gap-3">
                 <button
-                  onClick={() => alert("Mock action: Profile updated!")}
+                  onClick={() => alert('Mock action: Profile updated!')}
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
                 >
                   Update Profile
                 </button>
                 <button
-                  onClick={() => alert("Mock action: Settings saved!")}
+                  onClick={() => alert('Mock action: Settings saved!')}
                   className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
                 >
                   Save Settings
                 </button>
                 <button
-                  onClick={() => alert("Mock action: Data exported!")}
+                  onClick={() => alert('Mock action: Data exported!')}
                   className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
                 >
                   Export Data
