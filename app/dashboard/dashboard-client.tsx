@@ -1,13 +1,16 @@
 'use client';
+import { signOut } from '@/lib/actions/auth-action';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function DashboardClientPage() {
-
+  const router = useRouter();
   // Redirect to auth if not authenticated
 
   const handleSignOut = async () => {
-    alert('Signed out');
+    await signOut();
+    router.push('/auth');
   };
 
   return (
@@ -21,9 +24,7 @@ export default function DashboardClientPage() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                   Welcome to Your Dashboard!
                 </h2>
-                <p className="text-gray-600">
-                  Manage your account and explore
-                </p>
+                <p className="text-gray-600">Manage your account and explore</p>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-3">
@@ -38,26 +39,18 @@ export default function DashboardClientPage() {
                     <p className="text-gray-500">email@gmail.com</p>
                   </div>
                 </div>
-                <button
-                  onClick={handleSignOut}
-                  className={cn("btn-secondary py-0")}
-                >
+                <button onClick={handleSignOut} className={cn('btn-secondary py-0')}>
                   Sign Out
                 </button>
               </div>
             </div>
 
-
             {/* Navigation */}
             <div className="mt-8 pt-6 border-t border-gray-200">
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  href="/"
-                  className="btn-secondary"
-                >
+                <Link href="/" className="btn-secondary">
                   ← Back to Home
                 </Link>
-
               </div>
             </div>
           </div>

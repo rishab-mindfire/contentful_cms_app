@@ -6,25 +6,17 @@ export default function Home() {
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Contentful cms
-          </h1>
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">Contentful cms</h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
             Public product website with authentication, CMS-driven content, and a basic dashboard to
             promote any web application.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/auth"
-              className="btn-primary"
-            >
+            <Link href="/auth" className="btn-primary">
               sign in
             </Link>
-            <Link
-              href="/dashboard"
-              className="btn-secondary"
-            >
+            <Link href="/dashboard" className="btn-secondary">
               View Dashboard
             </Link>
           </div>
@@ -90,7 +82,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-
     </div>
   );
 }
