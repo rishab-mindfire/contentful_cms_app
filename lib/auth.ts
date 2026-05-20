@@ -1,8 +1,9 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { PrismaClient } from './generated/prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
+import { nextCookies } from 'better-auth/next-js';
 
 // Setup the connection pool
 const pool = new pg.Pool({
@@ -30,4 +31,5 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     },
   },
+  plugins: [nextCookies()],
 });
