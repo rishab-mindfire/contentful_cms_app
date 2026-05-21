@@ -1,4 +1,4 @@
-module.exports = {
-  // Format modified code, styles, and configurations seamlessly
-  '*.{js,jsx,ts,tsx,json,css,md}': ['prettier --write'],
+export default {
+  '*.{js,jsx,ts,tsx}': ['eslint --fix', 'prettier --write'],
+  '*.{json,md,css}': ['prettier --write'],
 };
