@@ -7,9 +7,6 @@ interface ActionError {
   digest?: string; // Next.js specific error digest
 }
 
-/**
- * Type guard to check if an error is actually a Next.js Redirect
- */
 function isNextRedirect(err: unknown): boolean {
   if (typeof err !== 'object' || err === null) return false;
 
@@ -20,20 +17,22 @@ function isNextRedirect(err: unknown): boolean {
   );
 }
 
-export const handleActionError = (err: unknown) => {
-  // 1. Manually check and re-throw redirects
+export const handleAuthActionError = (err: unknown) => {
+  //  Manually check and re-throw redirects
   if (isNextRedirect(err)) throw err;
 
   console.error('Action Error:', err);
 
   let message = 'An unexpected error occurred.';
 
-  // 2. Type-safe narrowing without 'any'
   if (err instanceof Error) {
     message = err.message;
   } else if (typeof err === 'object' && err !== null) {
     const errorBody = err as ActionError;
     message = errorBody.body?.message || errorBody.message || message;
+  }
+  if (message.includes('Invalid `db[model]')) {
+    message = 'faield db connection !';
   }
 
   return { success: false, error: message };

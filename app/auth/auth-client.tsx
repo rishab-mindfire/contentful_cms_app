@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { SocialAuth } from '@/components/ui/socialAuth';
 import { signIn, signUp } from '../../lib/actions/auth-action';
 import { Loader } from '@/components/ui/loader';
+import { ResultRes } from '@/utils/types';
 
 export default function AuthClientPage() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -39,14 +40,14 @@ export default function AuthClientPage() {
 
     try {
       if (isSignIn) {
-        const result = await signIn(email, password);
-        if (!result.user) {
-          setError('Invalid email and password');
+        const result: ResultRes | undefined = await signIn(email, password);
+        if (result && !result?.success) {
+          setError(result?.error);
         }
       } else {
-        const result = await signUp(email, password, name);
-        if (!result.user) {
-          setError('Faild to create account');
+        const result: ResultRes = await signUp(email, password, name);
+        if (!result || result.error.length > 0) {
+          setError(result.error);
         }
       }
     } catch (err) {

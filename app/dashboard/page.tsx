@@ -10,6 +10,5 @@ export default async function DashboardPage() {
   if (!session || session === undefined) {
     redirect('/auth');
   }
-  console.log('session :', session);
   return <DashboardClientPage />;
 }
