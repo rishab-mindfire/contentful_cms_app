@@ -1,10 +1,8 @@
 'use client';
+import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function DashboardClientPage() {
-  const router = useRouter();
-
   // Redirect to auth if not authenticated
 
   const handleSignOut = async () => {
@@ -26,7 +24,8 @@ export default function DashboardClientPage() {
               </div>
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-3">
-                  <img
+                  <Image
+                    alt="user profile image"
                     className="h-10 w-10 rounded-full"
                     src={
                       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
