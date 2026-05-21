@@ -28,12 +28,13 @@ export default function DashboardClientPage() {
               </div>
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-3">
-                  <img
+                  {/* <Image
+                    alt='profile image'
                     className="h-10 w-10 rounded-full"
                     src={
                       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
                     }
-                  />
+                  /> */}
                   <div className="text-sm">
                     <p className="text-gray-900 font-medium">John Doe</p>
                     <p className="text-gray-500">email@gmail.com</p>

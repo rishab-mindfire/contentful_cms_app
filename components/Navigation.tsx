@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 type Session = typeof auth.$Infer.Session;
-export default function Navigation({ session }: { session: Session | any }) {
+export default function Navigation({ session }: { session: Session }) {
   const pathname = usePathname();
-
+  console.log(session);
   const isActive = (path: string) => {
     return pathname === path;
   };

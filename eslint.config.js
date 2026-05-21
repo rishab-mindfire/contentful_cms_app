@@ -19,6 +19,7 @@ export default tseslint.config(
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
       'react/react-in-jsx-scope': 'off',
+      // 'no-console': ['error', { allow: ['warn', 'error'] }],
     },
   },
 

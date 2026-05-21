@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import { SocialAuth } from '@/components/ui/socialAuth';
 import { signIn, signUp } from '../../lib/actions/auth-action';
 import { Loader } from '@/components/ui/loader';
@@ -13,8 +12,6 @@ export default function AuthClientPage() {
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
   // Get callback URL from search params (set by middleware)
 
