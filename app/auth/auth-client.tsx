@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { SocialAuth } from '@/components/ui/socialAuth';
-import { signIn, signUp } from '../../lib/actions/auth-action';
+import { signIn, signInSocial, signUp } from '../../lib/actions/auth-action';
 import { Loader } from '@/components/ui/loader';
 import { ResultRes } from '@/utils/types';
 
@@ -14,14 +14,13 @@ export default function AuthClientPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Get callback URL from search params (set by middleware)
-
+  //social login
   const handleSocialAuth = async (provider: 'google' | 'github') => {
     setIsLoading(true);
     setError('');
 
     try {
-      console.log('Logged in with', provider);
+      await signInSocial(provider);
     } catch (err) {
       setError(
         `Error authenticating with ${provider}: ${
@@ -175,7 +174,7 @@ export default function AuthClientPage() {
               </span>
             </div>
           </div>
-          <SocialAuth handleSocialAuth={() => handleSocialAuth} isLoading={isLoading} />
+          <SocialAuth handleSocialAuth={handleSocialAuth} isLoading={isLoading} />
         </div>
       </div>
     </div>

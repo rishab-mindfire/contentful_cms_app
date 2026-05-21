@@ -1,13 +1,15 @@
 'use client';
 import { signOut } from '@/lib/actions/auth-action';
 import { cn } from '@/lib/utils';
+import { SessionType } from '@/utils/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-export default function DashboardClientPage() {
+export default function DashboardClientPage({ session }: { session: SessionType }) {
   const router = useRouter();
-  // Redirect to auth if not authenticated
+  const user = session.user;
 
+  // Redirect to auth if not authenticated
   const handleSignOut = async () => {
     await signOut();
     router.push('/auth');
@@ -21,10 +23,8 @@ export default function DashboardClientPage() {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex justify-between items-start mb-6">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  Welcome to Your Dashboard!
-                </h2>
-                <p className="text-gray-600">Manage your account and explore</p>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome, {user.name}</h2>
+                <p className="text-gray-600">Explore your account</p>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-3">
@@ -36,11 +36,11 @@ export default function DashboardClientPage() {
                     }
                   /> */}
                   <div className="text-sm">
-                    <p className="text-gray-900 font-medium">John Doe</p>
-                    <p className="text-gray-500">email@gmail.com</p>
+                    <p className="text-gray-900 font-medium">{user.name}</p>
+                    <p className="text-gray-500">{user.email}</p>
                   </div>
                 </div>
-                <button onClick={handleSignOut} className={cn('btn-secondary py-0')}>
+                <button onClick={handleSignOut} className={cn('btn-secondary')}>
                   Sign Out
                 </button>
               </div>
