@@ -35,6 +35,28 @@ export default function Navigation({ session }: { session: SessionType }) {
               Home
             </Link>
 
+            <Link
+              href="/our-team"
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActive('/our-team')
+                  ? 'text-indigo-600 bg-indigo-50'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Our team
+            </Link>
+
+            <Link
+              href="/about-us"
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                isActive('/about-us')
+                  ? 'text-indigo-600 bg-indigo-50'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              About us
+            </Link>
+
             {session && (
               <Link
                 href="/dashboard"

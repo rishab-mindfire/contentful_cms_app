@@ -2,7 +2,6 @@
 import { signOut } from '@/lib/actions/auth-action';
 import { cn } from '@/lib/utils';
 import { SessionType } from '@/utils/types';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardClientPage({ session }: { session: SessionType }) {
@@ -28,13 +27,6 @@ export default function DashboardClientPage({ session }: { session: SessionType 
               </div>
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-3">
-                  {/* <Image
-                    alt='profile image'
-                    className="h-10 w-10 rounded-full"
-                    src={
-                      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
-                    }
-                  /> */}
                   <div className="text-sm">
                     <p className="text-gray-900 font-medium">{user.name}</p>
                     <p className="text-gray-500">{user.email}</p>
@@ -43,15 +35,6 @@ export default function DashboardClientPage({ session }: { session: SessionType 
                 <button onClick={handleSignOut} className={cn('btn-secondary')}>
                   Sign Out
                 </button>
-              </div>
-            </div>
-
-            {/* Navigation */}
-            <div className="mt-8 pt-6 border-t border-gray-200">
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link href="/" className="btn-secondary">
-                  ← Back to Home
-                </Link>
               </div>
             </div>
           </div>
