@@ -21,8 +21,6 @@ export const handleAuthActionError = (err: unknown) => {
   //  Manually check and re-throw redirects
   if (isNextRedirect(err)) throw err;
 
-  console.error('Action Error:', err);
-
   let message = 'An unexpected error occurred.';
 
   if (err instanceof Error) {
