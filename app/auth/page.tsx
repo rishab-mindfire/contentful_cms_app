@@ -10,7 +10,6 @@ export default async function AuthPage() {
   if (session && session !== undefined) {
     redirect('/dashboard');
   }
-  console.log('session for login :', session);
 
   return <AuthClientPage />;
 }

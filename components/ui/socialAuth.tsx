@@ -4,7 +4,7 @@ export const SocialAuth = ({
   handleSocialAuth,
   isLoading,
 }: {
-  handleSocialAuth: (provider: string) => void;
+  handleSocialAuth: (provider: 'google' | 'github') => void | Promise<void>;
   isLoading: boolean;
 }) => {
   return (
