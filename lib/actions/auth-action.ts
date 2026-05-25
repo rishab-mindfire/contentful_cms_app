@@ -44,7 +44,6 @@ export const signInSocial = async (provider: 'github' | 'google') => {
       callbackURL: '/dashboard',
     },
   });
-  console.log('url   :::::::', url);
   if (url) {
     redirect(url);
   }

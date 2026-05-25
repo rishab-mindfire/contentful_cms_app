@@ -5,6 +5,7 @@ import { headers } from 'next/headers';
 import { auth } from '@/lib/auth';
 import Navigation from '@/components/Navigation';
 import { SessionType } from '@/utils/types';
+import { Footer } from '@/components/Footer';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -33,8 +34,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {session && <Navigation session={session} />}
+        <Navigation session={session!} />
         {children}
+        <Footer />
       </body>
     </html>
   );
