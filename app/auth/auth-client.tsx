@@ -5,6 +5,7 @@ import { SocialAuth } from '@/components/ui/socialAuth';
 import { signIn, signInSocial, signUp } from '../../lib/actions/auth-action';
 import { Loader } from '@/components/ui/loader';
 import { ResultRes } from '@/utils/types';
+import Link from 'next/link';
 
 export default function AuthClientPage() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -58,8 +59,15 @@ export default function AuthClientPage() {
 
   return (
     <div className="min-h-screen from-blue-50 to-indigo-100">
-      <div className="flex items-center justify-center p-4 pt-20">
-        <div className="max-w-md w-full space-y-8">
+      <div className="flex items-center justify-center p-2 pt-2">
+        <div className="max-w-md w-full space-y-4">
+          <Link href="/" className="flex items-center place-self-center">
+            <div className="w-16 h-16 rounded-lg flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                <path d="M541.9 191.9L541.9 448L478.5 484.5L478.5 228.7L320 137.1L161.4 228.7L161.8 484.6L98.5 448L98.5 192.1L320.4 64L541.9 191.9zM351.8 484.5L320.2 502.9L288.4 484.7L288.4 228.7L225.1 265.3L225.2 521.2L320.1 576.1L415.2 521.2L415.2 265.2L351.8 228.6L351.8 484.5z" />
+              </svg>
+            </div>
+          </Link>
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               {isSignIn ? 'Welcome Back' : 'Create Account'}
