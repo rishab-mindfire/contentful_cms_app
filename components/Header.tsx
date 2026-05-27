@@ -29,40 +29,57 @@ export default function Heder({ session }: { session: SessionType }) {
             <Link
               href="/"
               className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                isActive('/') ? 'text-indigo-600 bg-indigo-50' : 'text-gray-600 hover:text-gray-900'
+                isActive('/') ? 'text-white bg-indigo-700' : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               Home
             </Link>
 
             <Link
-              href="/our-team"
+              href="/features"
               className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                isActive('/our-team')
-                  ? 'text-indigo-600 bg-indigo-50'
+                isActive('/features')
+                  ? 'text-white bg-indigo-700'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              Our team
+              features
             </Link>
 
             <Link
-              href="/about-us"
+              href="/pricing"
               className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                isActive('/about-us')
-                  ? 'text-indigo-600 bg-indigo-50'
+                isActive('/pricing')
+                  ? 'text-white bg-indigo-700'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              About us
+              pricing
             </Link>
 
             {session && (
               <Link
                 href="/dashboard"
-                className="bg-indigo-600 text-white px-4 py-1 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                  isActive('/dashboard')
+                    ? 'text-white bg-indigo-700'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
               >
                 Dashboard
+              </Link>
+            )}
+
+            {session && (
+              <Link
+                href="/blogs"
+                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                  isActive('/blogs')
+                    ? 'text-white bg-indigo-700'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Blogs
               </Link>
             )}
 
