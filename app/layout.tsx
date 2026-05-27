@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { headers } from 'next/headers';
 import { auth } from '@/lib/auth';
-import Navigation from '@/components/Navigation';
+import Header from '@/components/Header';
 import { SessionType } from '@/utils/types';
 import { Footer } from '@/components/Footer';
 
@@ -34,7 +34,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Navigation session={session!} />
+        <Header session={session!} />
         <div className="min-h-screen"> {children}</div>
         <Footer />
       </body>
