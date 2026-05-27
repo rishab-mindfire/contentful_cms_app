@@ -5,11 +5,8 @@ import nextPlugin from '@next/eslint-plugin-next';
 export default tseslint.config(
   // Core JS Recommended rules
   js.configs.recommended,
-
   // Automated TypeScript Configurations
   ...tseslint.configs.recommended,
-
-  // Custom Next.js Integration
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
@@ -23,7 +20,7 @@ export default tseslint.config(
     },
   },
 
-  // Global Ignores (This stops ESLint from reading auto-generated code)
+  // Global Ignores
   {
     ignores: [
       '.next/',
