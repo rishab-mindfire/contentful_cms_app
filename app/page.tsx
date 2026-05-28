@@ -9,7 +9,7 @@ export default function Home() {
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">Headless CMS</h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
             Public product website with authentication, CMS-driven content, and a basic dashboard to
-            promote any web application.
+            promote web application.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -24,7 +24,7 @@ export default function Home() {
 
         {/* Features Grid */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="feature-card">
+          <Link href={'/blogs'} className="feature-card">
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
               <svg
                 className="w-6 h-6 text-blue-600"
@@ -41,9 +41,9 @@ export default function Home() {
               </svg>
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3">Blog post</h3>
-          </div>
+          </Link>
 
-          <div className="feature-card">
+          <Link href={'/features'} className="feature-card">
             <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
               <svg
                 className="w-6 h-6 text-green-600"
@@ -59,10 +59,10 @@ export default function Home() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">Email & Password</h3>
-          </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">Features</h3>
+          </Link>
 
-          <div className="feature-card">
+          <Link href={'/pricing'} className="feature-card">
             <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
               <svg
                 className="w-6 h-6 text-purple-600"
@@ -78,8 +78,8 @@ export default function Home() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">Dynamic content</h3>
-          </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">Pricing</h3>
+          </Link>
         </div>
       </main>
     </div>
