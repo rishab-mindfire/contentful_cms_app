@@ -27,3 +27,69 @@ export type SessionType = {
   };
   user: UserType;
 };
+
+// Types for Global Data Structure
+interface NavItem {
+  id: number;
+  href: string;
+  lable: string;
+  isExternal: boolean;
+  isButtonLink: boolean;
+  type: string | null;
+}
+
+interface ImageFormat {
+  id: number;
+  documentId: string;
+  url: string;
+}
+
+export interface HeaderType {
+  id: number;
+  text: string | null;
+  navItems: NavItem[];
+  logo: {
+    id: number;
+    lable: string;
+    href: string | null;
+    isExternal: boolean;
+    image: ImageFormat;
+  };
+}
+//footers
+interface SocialLink {
+  id: number;
+  lable: string;
+  href: string;
+  isExternal: boolean;
+  image: ImageFormat;
+}
+
+export interface FooterType {
+  id: number;
+  text: string;
+  logo: {
+    id: number;
+    lable: string;
+    href: string;
+    isExternal: boolean;
+    image: ImageFormat;
+  };
+  socialLinks: SocialLink[];
+}
+
+export interface GlobalData {
+  id: number;
+  documentId: string;
+  Title: string;
+  Description: string;
+  footer: FooterType;
+  header: HeaderType;
+}
+
+//  Type for Newsletter Subscriber
+export interface Subscriber {
+  id: number;
+  email: string;
+  createdAt: Date;
+}
