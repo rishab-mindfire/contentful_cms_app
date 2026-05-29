@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 import { auth } from '../auth';
 import { headers } from 'next/headers';
-import { handleAuthActionError } from '../error-handler';
+import { handleAuthActionError } from './error-betterAuth';
 import { ResultRes } from '@/utils/types';
 
 export const signUp = async (email: string, password: string, name: string): Promise<ResultRes> => {

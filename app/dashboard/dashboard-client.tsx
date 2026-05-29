@@ -1,42 +1,44 @@
 'use client';
 import { signOut } from '@/lib/actions/auth-action';
-import { cn } from '@/lib/utils';
 import { SessionType } from '@/utils/types';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function DashboardClientPage({ session }: { session: SessionType }) {
   const router = useRouter();
   const user = session.user;
 
-  // Redirect to auth if not authenticated
   const handleSignOut = async () => {
     await signOut();
     router.push('/auth');
   };
 
   return (
-    <div className="min-h-screen from-blue-50 to-indigo-100">
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 pt-20">
-        <div className="px-4 py-6 sm:px-0">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome, {user.name}</h2>
-                <p className="text-gray-600">Explore your account</p>
+    <div className="flex min-h-screen bg-gray-50">
+      <main className="flex-1 p-6 md:p-10">
+        <div className="bg-white rounded-xl shadow-sm border p-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div className="flex items-center space-x-4">
+              <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-indigo-100 ">
+                <Image
+                  src={user.image || '/default-avatar.png'}
+                  alt={user.name || 'User avatar'}
+                  fill
+                  className="object-cover"
+                />
               </div>
-              <div className="flex items-center space-x-3">
-                <div className="flex items-center space-x-3">
-                  <div className="text-sm">
-                    <p className="text-gray-900 font-medium">{user.name}</p>
-                    <p className="text-gray-500">{user.email}</p>
-                  </div>
-                </div>
-                <button onClick={handleSignOut} className={cn('btn-secondary')}>
-                  Sign Out
-                </button>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">Welcome, {user.name}</h2>
+                <p className="text-gray-500">{user.email}</p>
               </div>
             </div>
+
+            <button
+              onClick={handleSignOut}
+              className="w-full md:w-auto px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition text-center"
+            >
+              Sign Out
+            </button>
           </div>
         </div>
       </main>

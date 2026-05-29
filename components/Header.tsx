@@ -1,99 +1,99 @@
 'use client';
-
-import { SessionType } from '@/utils/types';
+import { useGlobal } from '@/app/GlobalContext';
+import { getFullUrl } from '@/utils/urlCreator';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
-export default function Heder({ session }: { session: SessionType }) {
+export default function Header() {
+  // global data from the Context
+  const { session, globalData } = useGlobal();
+  if (!globalData?.header) return null;
+  const headerData = globalData?.header;
+  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-
-  const isActive = (path: string) => {
-    return pathname === path;
-  };
+  const isActive = (path: string) => pathname === path;
 
   return (
-    <header className="bg-white backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* company logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-                <path d="M541.9 191.9L541.9 448L478.5 484.5L478.5 228.7L320 137.1L161.4 228.7L161.8 484.6L98.5 448L98.5 192.1L320.4 64L541.9 191.9zM351.8 484.5L320.2 502.9L288.4 484.7L288.4 228.7L225.1 265.3L225.2 521.2L320.1 576.1L415.2 521.2L415.2 265.2L351.8 228.6L351.8 484.5z" />
-              </svg>
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2 shrink-0">
+            <div className="relative w-8 h-8">
+              <Image
+                src={getFullUrl(headerData?.logo?.image?.url)}
+                alt={headerData.logo.lable}
+                fill
+                unoptimized
+                className="object-contain"
+              />
             </div>
-            <span className="text-xl font-bold text-gray-900">Headless CMS</span>
+            <span className="text-lg font-bold text-gray-900 hidden sm:block">
+              {headerData.logo.lable}
+            </span>
           </Link>
-          {/* Heder links */}
-          <nav className="flex items-center space-x-6">
-            <Link
-              href="/"
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                isActive('/') ? 'text-white bg-indigo-700' : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Home
-            </Link>
 
-            <Link
-              href="/features"
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                isActive('/features')
-                  ? 'text-white bg-indigo-700'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              features
-            </Link>
-
-            <Link
-              href="/pricing"
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                isActive('/pricing')
-                  ? 'text-white bg-indigo-700'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              pricing
-            </Link>
-
-            {session && (
-              <Link
-                href="/dashboard"
-                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                  isActive('/dashboard')
-                    ? 'text-white bg-indigo-700'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                Dashboard
-              </Link>
-            )}
-
-            {session && (
-              <Link
-                href="/blogs"
-                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                  isActive('/blogs')
-                    ? 'text-white bg-indigo-700'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                Blogs
-              </Link>
-            )}
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center space-x-4">
+            {session &&
+              headerData?.navItems?.map((item) => (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className={`px-3 py-1 rounded-md text-sm font-medium ${isActive(item.href) ? 'text-white bg-indigo-700' : 'text-gray-600 hover:text-gray-900'}`}
+                >
+                  {item.lable}
+                </Link>
+              ))}
 
             {!session && (
               <Link
-                href="/auth"
-                className="text-gray-600 hover:text-gray-900 px-3 py-1 rounded-md text-sm font-medium transition-colors"
+                href={'/auth'}
+                className="px-3 py-1 rounded-md text-sm font-medium text-black bg-gray-100"
               >
-                Sign In
+                sign in
               </Link>
             )}
           </nav>
+
+          {/* Mobile Menu Button */}
+          <button className="md:hidden p-2" onClick={() => setIsOpen(!isOpen)}>
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
         </div>
       </div>
+
+      {/* Mobile Nav Drawer */}
+      {isOpen && (
+        <div className="md:hidden px-4 pt-2 pb-4 space-y-1 bg-gray-50 border-b">
+          {headerData?.navItems?.map((item) => (
+            <Link
+              key={item.id}
+              href={item.href}
+              className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-200 rounded-md"
+            >
+              {item.lable}
+            </Link>
+          ))}
+          {!session && (
+            <Link
+              href={'/auth'}
+              className="px-3 py-1 rounded-md text-sm font-medium text-black bg-gray-100"
+            >
+              sign in
+            </Link>
+          )}
+        </div>
+      )}
     </header>
   );
 }
