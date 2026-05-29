@@ -1,8 +1,11 @@
+// src/services/landingPage.service.ts
+import { LandingPageData } from '@/utils/types';
 import { apiClient } from './api-client';
 
 export const landingPageService = {
-  // Fetch header and footer
-  getData: async () => {
-    return await apiClient.get('/landing-page');
+  // No more TS errors!
+  getData: async (): Promise<LandingPageData> => {
+    // T is now LandingPageData
+    return await apiClient.get<LandingPageData>('/landing-page');
   },
 };

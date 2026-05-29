@@ -8,8 +8,8 @@ const nextConfig = {
       // strapi tool
       {
         protocol: strapiUrl.protocol.replace(':', '') as 'http' | 'https',
-        hostname: strapiUrl.hostname,
-        port: strapiUrl.port,
+        hostname: '127.0.0.1',
+        port: strapiUrl.port || '',
         pathname: '/uploads/**',
       },
       // GitHub Avatars

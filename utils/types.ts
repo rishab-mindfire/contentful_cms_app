@@ -105,64 +105,126 @@ export interface GlobalData {
   login: LoginType;
 }
 
-// --- Existing Base Interfaces ---
+//landing page :--
+// --- Base Shared Types ---
 
-export interface ApiResponse {
-  data: LandingPageData;
-  meta: Record<string, unknown>;
-}
-
-export interface LandingPageData {
+export interface Image {
   id: number;
   documentId: string;
-  title: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  blocks: Block[];
-}
-
-// landing page
-// --- Block Components ---
-export interface ApiResponse {
-  data: LandingPageData;
-  meta: Record<string, unknown>;
-}
-
-export interface LandingPageData {
-  id: number;
-  blocks: Block[];
-  // ... other fields
-}
-
-export type Block = HeroBlock | SectionHeadingBlock | CardGridBlock;
-
-export interface HeroBlock {
-  id: number;
-  heading: string;
-  text: string;
-  links: LinkType[];
-  image: { url: string; alternativeText: string | null };
-  __component: 'blocks.hero';
-}
-
-export interface SectionHeadingBlock {
-  id: number;
-  heading: string;
-  subHeading?: string;
-  __component: 'blocks.section-heading';
-}
-
-export interface CardGridBlock {
-  id: number;
-  cards: { id: number; heading: string; text: string }[];
-  __component: 'blocks.card-grid';
+  alternativeText: string | null;
+  url: string;
 }
 
 export interface LinkType {
   id: number;
   href: string;
   lable: string;
+  isExternal: boolean;
+  isButtonLink: boolean;
   type: 'PRIMARY' | 'SECONDARY';
 }
+
+// Rich Text / Content Node structure
+export interface ContentNode {
+  type: string;
+  children: {
+    type: string;
+    text: string;
+  }[];
+}
+
+// --- Block Component Types ---
+
+export interface HeroBlock {
+  __component: 'blocks.hero';
+  id: number;
+  heading: string;
+  text: string;
+  links: LinkType[];
+  image: Image;
+}
+
+export interface SectionHeadingBlock {
+  __component: 'blocks.section-heading';
+  id: number;
+  heading: string;
+  subHeading: string;
+}
+
+export interface Card {
+  id: number;
+  heading: string;
+  text: string;
+}
+
+export interface CardGridBlock {
+  __component: 'blocks.card-grid';
+  id: number;
+  cards: Card[];
+}
+
+export interface ContentWithImageBlock {
+  __component: 'blocks.component-content-with-image';
+  id: number;
+  reversed: boolean;
+  heading: string;
+  content: ContentNode[];
+  image: Image;
+  link: LinkType | null;
+}
+
+export interface MarkdownBlock {
+  __component: 'blocks.markdown';
+  id: number;
+  content: ContentNode[];
+}
+
+export interface PersonCardBlock {
+  __component: 'blocks.person-card';
+  id: number;
+  aboutPerson: string;
+  personName: string;
+  personJob: string;
+  image: Image;
+}
+
+export interface FAQItem {
+  id: number;
+  heading: string;
+  text: string;
+}
+
+export interface FAQBlock {
+  __component: 'blocks.faqs';
+  id: number;
+  Faq: FAQItem[];
+}
+
+// --- Master Union Type ---
+
+export type PageBlock =
+  | HeroBlock
+  | SectionHeadingBlock
+  | CardGridBlock
+  | ContentWithImageBlock
+  | MarkdownBlock
+  | PersonCardBlock
+  | FAQBlock;
+
+export interface LandingPageData {
+  data: {
+    id: number;
+    documentId: string;
+    title: string;
+    description: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    blocks: PageBlock[];
+  };
+}
+
+// type that maps the __component string to the correct component props
+export type BlockComponentMap = {
+  [K in PageBlock['__component']]: React.ComponentType<Extract<PageBlock, { __component: K }>>;
+};
