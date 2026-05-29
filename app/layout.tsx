@@ -4,8 +4,9 @@ import './globals.css';
 import { headers } from 'next/headers';
 import { auth } from '@/lib/auth';
 import Header from '@/components/Header';
-import { GlobalData, SessionType } from '@/utils/types';
+import { SessionType } from '@/utils/types';
 import { Footer } from '@/components/Footer';
+import { GlobalProvider } from './GlobalContext';
 import { globalService } from '@/services/global.service';
 
 const geistSans = Geist({
@@ -31,14 +32,21 @@ export default async function RootLayout({
   const session: SessionType | null = await auth.api.getSession({
     headers: await headers(),
   });
-  const globalData: GlobalData = await globalService.getGlobalData();
+
+  // Fetch Global Data (Header/Footer content)
+  const globalData = await globalService.getData();
 
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Header session={session!} headerData={globalData.header} />
-        <div className="min-h-screen"> {children}</div>
-        <Footer footerData={globalData.footer} />
+      <body
+        className={`${geistSans.variable} ${geistMono.variable}  antialiased`}
+        cz-shortcut-listen="true"
+      >
+        <GlobalProvider data={globalData} session={session}>
+          <Header />
+          <div className="min-h-screen"> {children}</div>
+          <Footer />
+        </GlobalProvider>
       </body>
     </html>
   );

@@ -15,16 +15,14 @@ export default function DashboardClientPage({ session }: { session: SessionType 
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Main Content */}
       <main className="flex-1 p-6 md:p-10">
         <div className="bg-white rounded-xl shadow-sm border p-8">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div className="flex items-center space-x-4">
-              {/* Avatar Image */}
-              <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-indigo-100">
+              <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-indigo-100 ">
                 <Image
                   src={user.image || '/default-avatar.png'}
-                  alt={user.name}
+                  alt={user.name || 'User avatar'}
                   fill
                   className="object-cover"
                 />
@@ -37,7 +35,7 @@ export default function DashboardClientPage({ session }: { session: SessionType 
 
             <button
               onClick={handleSignOut}
-              className="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition"
+              className="w-full md:w-auto px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition text-center"
             >
               Sign Out
             </button>

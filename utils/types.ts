@@ -1,3 +1,9 @@
+// interface for context
+export interface GlobalContextValue {
+  globalData: GlobalData;
+  session: SessionType | null;
+}
+
 type UserType = {
   id: string;
   createdAt: Date;
@@ -78,6 +84,17 @@ export interface FooterType {
   socialLinks: SocialLink[];
 }
 
+//login type
+interface LoginType {
+  id: number;
+  mainText: string;
+  secondaryText: string;
+  EmailLabel: string;
+  passwordlabel: string;
+  namelabel: string;
+  logoImage: ImageFormat;
+}
+
 export interface GlobalData {
   id: number;
   documentId: string;
@@ -85,11 +102,67 @@ export interface GlobalData {
   Description: string;
   footer: FooterType;
   header: HeaderType;
+  login: LoginType;
 }
 
-//  Type for Newsletter Subscriber
-export interface Subscriber {
+// --- Existing Base Interfaces ---
+
+export interface ApiResponse {
+  data: LandingPageData;
+  meta: Record<string, unknown>;
+}
+
+export interface LandingPageData {
   id: number;
-  email: string;
-  createdAt: Date;
+  documentId: string;
+  title: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  blocks: Block[];
+}
+
+// landing page
+// --- Block Components ---
+export interface ApiResponse {
+  data: LandingPageData;
+  meta: Record<string, unknown>;
+}
+
+export interface LandingPageData {
+  id: number;
+  blocks: Block[];
+  // ... other fields
+}
+
+export type Block = HeroBlock | SectionHeadingBlock | CardGridBlock;
+
+export interface HeroBlock {
+  id: number;
+  heading: string;
+  text: string;
+  links: LinkType[];
+  image: { url: string; alternativeText: string | null };
+  __component: 'blocks.hero';
+}
+
+export interface SectionHeadingBlock {
+  id: number;
+  heading: string;
+  subHeading?: string;
+  __component: 'blocks.section-heading';
+}
+
+export interface CardGridBlock {
+  id: number;
+  cards: { id: number; heading: string; text: string }[];
+  __component: 'blocks.card-grid';
+}
+
+export interface LinkType {
+  id: number;
+  href: string;
+  lable: string;
+  type: 'PRIMARY' | 'SECONDARY';
 }

@@ -1,18 +1,16 @@
 'use client';
-
-import { HeaderType, SessionType } from '@/utils/types';
+import { useGlobal } from '@/app/GlobalContext';
+import { getFullUrl } from '@/utils/urlCreator';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-export default function Header({
-  session,
-  headerData,
-}: {
-  session: SessionType;
-  headerData: HeaderType;
-}) {
+export default function Header() {
+  // global data from the Context
+  const { session, globalData } = useGlobal();
+  if (!globalData?.header) return null;
+  const headerData = globalData?.header;
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
@@ -25,7 +23,7 @@ export default function Header({
           <Link href="/" className="flex items-center space-x-2 shrink-0">
             <div className="relative w-8 h-8">
               <Image
-                src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${headerData.logo.image.url}`}
+                src={getFullUrl(headerData?.logo?.image?.url)}
                 alt={headerData.logo.lable}
                 fill
                 unoptimized
