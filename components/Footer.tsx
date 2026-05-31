@@ -21,7 +21,6 @@ export const Footer = () => {
             alt={logo.lable}
             width={50}
             height={50}
-            unoptimized
             className="h-16 w-auto"
             priority
           />
@@ -46,7 +45,6 @@ export const Footer = () => {
                 width={24}
                 height={24}
                 className="w-10 h-10"
-                unoptimized
               />
             </Link>
           ))}
