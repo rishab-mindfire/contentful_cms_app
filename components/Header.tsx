@@ -26,7 +26,6 @@ export default function Header() {
                 src={getFullUrl(headerData?.logo?.image?.url)}
                 alt={headerData.logo.lable}
                 fill
-                unoptimized
                 className="object-contain"
               />
             </div>

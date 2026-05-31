@@ -4,10 +4,18 @@ const strapiUrl = new URL(process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhos
 
 const nextConfig = {
   images: {
+    unoptimized: process.env.NODE_ENV === 'development',
     remotePatterns: [
       // strapi tool
       {
         protocol: strapiUrl.protocol.replace(':', '') as 'http' | 'https',
+        hostname: 'localhost',
+        port: strapiUrl.port || '',
+        pathname: '/uploads/**',
+      },
+      // Allow 127.0.0.1
+      {
+        protocol: 'http',
         hostname: '127.0.0.1',
         port: strapiUrl.port || '',
         pathname: '/uploads/**',

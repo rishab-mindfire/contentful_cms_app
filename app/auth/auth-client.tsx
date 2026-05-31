@@ -74,7 +74,6 @@ export default function AuthClientPage() {
                 src={getFullUrl(loginData.logoImage.url)}
                 alt={loginData.mainText}
                 fill
-                unoptimized
                 className="object-contain"
               />
             </div>
