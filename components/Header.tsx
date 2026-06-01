@@ -1,11 +1,11 @@
 'use client';
 import { useGlobal } from '@/app/GlobalContext';
-import { getFullUrl } from '@/utils/urlCreator';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import SystemStatus from './error/SystemStatus';
+import { getFullUrl } from '@/utils/helperFunctions';
 
 export default function Header() {
   // global data from the Context

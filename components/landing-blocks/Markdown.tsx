@@ -1,36 +1,16 @@
-import { MarkdownBlock } from '@/utils/types';
+import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer';
 
-interface ChildNode {
-  text: string;
-  bold?: boolean;
-  italic?: boolean;
+// markdown props from starpi
+interface MarkdownProps {
+  content: BlocksContent;
 }
 
-interface MarkdownContentBlock {
-  type: string;
-  children: ChildNode[];
-}
-
-export default function Markdown({ content }: MarkdownBlock) {
+export default function Markdown({ content }: MarkdownProps) {
   if (!content) return null;
 
   return (
-    <div className="prose max-w-none">
-      {content.map((block: MarkdownContentBlock, idx: number) => {
-        if (block.type === 'paragraph') {
-          return (
-            <p key={idx}>
-              {/* Loop through ALL children  */}
-              {block.children.map((child, childIdx) => {
-                if (child.bold) return <strong key={childIdx}>{child.text}</strong>;
-                if (child.italic) return <em key={childIdx}>{child.text}</em>;
-                return child.text;
-              })}
-            </p>
-          );
-        }
-        return null;
-      })}
+    <div className="prose max-w-none dark:prose-invert text-gray-600 leading-relaxed">
+      <BlocksRenderer content={content} />
     </div>
   );
 }

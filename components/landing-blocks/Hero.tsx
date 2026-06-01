@@ -1,5 +1,5 @@
+import { getFullUrl } from '@/utils/helperFunctions';
 import { HeroBlock } from '@/utils/types';
-import { getFullUrl } from '@/utils/urlCreator';
 import Image from 'next/image';
 import Link from 'next/link';
 
