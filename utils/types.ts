@@ -1,6 +1,6 @@
 // interface for context
 export interface GlobalContextValue {
-  globalData: GlobalData;
+  globalData: GlobalData | null;
   session: SessionType | null;
 }
 
@@ -201,7 +201,6 @@ export interface FAQBlock {
 }
 
 // --- Master Union Type ---
-
 export type PageBlock =
   | HeroBlock
   | SectionHeadingBlock
