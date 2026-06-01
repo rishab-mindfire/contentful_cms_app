@@ -1,10 +1,10 @@
-import CardGrid from '@/components/blocks/CardGrid';
-import ContentWithImage from '@/components/blocks/ContentWithImage';
-import Faqs from '@/components/blocks/Faqs';
-import Hero from '@/components/blocks/Hero';
-import Markdown from '@/components/blocks/Markdown';
-import PersonCard from '@/components/blocks/PersonCard';
-import SectionHeading from '@/components/blocks/SectionHeading';
+import CardGrid from '@/components/landing-blocks/CardGrid';
+import ContentWithImage from '@/components/landing-blocks/ContentWithImage';
+import Faqs from '@/components/landing-blocks/Faqs';
+import Hero from '@/components/landing-blocks/Hero';
+import Markdown from '@/components/landing-blocks/Markdown';
+import PersonCard from '@/components/landing-blocks/PersonCard';
+import SectionHeading from '@/components/landing-blocks/SectionHeading';
 import { BlockComponentMap, PageBlock } from '@/utils/types';
 
 // This maps the __component string to the correct component
