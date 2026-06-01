@@ -1,13 +1,16 @@
-import CardGrid from '@/components/landing-blocks/CardGrid';
-import ContentWithImage from '@/components/landing-blocks/ContentWithImage';
-import Faqs from '@/components/landing-blocks/Faqs';
-import Hero from '@/components/landing-blocks/Hero';
-import Markdown from '@/components/landing-blocks/Markdown';
-import PersonCard from '@/components/landing-blocks/PersonCard';
-import SectionHeading from '@/components/landing-blocks/SectionHeading';
-import { BlockComponentMap, PageBlock } from '@/utils/types';
+import { lazy, Suspense } from 'react';
+import { PageBlock, BlockComponentMap } from '@/utils/types';
 
-// This maps the __component string to the correct component
+// Lazy load components
+const Hero = lazy(() => import('@/components/landing-blocks/Hero'));
+const SectionHeading = lazy(() => import('@/components/landing-blocks/SectionHeading'));
+const CardGrid = lazy(() => import('@/components/landing-blocks/CardGrid'));
+const Markdown = lazy(() => import('@/components/landing-blocks/Markdown'));
+const PersonCard = lazy(() => import('@/components/landing-blocks/PersonCard'));
+const Faqs = lazy(() => import('@/components/landing-blocks/Faqs'));
+const ContentWithImage = lazy(() => import('@/components/landing-blocks/ContentWithImage'));
+
+// Mapping object using your specific BlockComponentMap type
 const componentMap: BlockComponentMap = {
   'blocks.hero': Hero,
   'blocks.section-heading': SectionHeading,
@@ -21,24 +24,21 @@ const componentMap: BlockComponentMap = {
 interface Props {
   block: PageBlock;
 }
+
 export default function BlockRenderer({ block }: Props) {
-  //  grab the component
+  // Extract the specific component based on the discriminator string
   const Component = componentMap[block.__component];
 
-  if (!Component) return null;
-
-  if (block.__component === 'blocks.hero') {
-    return <Hero {...block} />;
-  }
-  if (block.__component === 'blocks.section-heading') {
-    return <SectionHeading {...block} />;
-  }
-  if (block.__component === 'blocks.card-grid') {
-    return <CardGrid {...block} />;
-  }
-  if (block.__component === 'blocks.person-card') {
-    return <PersonCard {...block} />;
+  if (!Component) {
+    console.warn(`Component not found for: ${block.__component}`);
+    return null;
   }
 
-  return null;
+  const BlockComponent = Component as React.ComponentType<typeof block>;
+
+  return (
+    <Suspense fallback={<div className="animate-pulse h-20 w-full" aria-hidden="true" />}>
+      <BlockComponent {...block} />
+    </Suspense>
+  );
 }
