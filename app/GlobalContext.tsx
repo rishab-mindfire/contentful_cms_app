@@ -10,7 +10,7 @@ export const GlobalProvider = ({
   session,
 }: {
   children: React.ReactNode;
-  data: GlobalData;
+  data: GlobalData | null;
   session: SessionType | null;
 }) => {
   return (

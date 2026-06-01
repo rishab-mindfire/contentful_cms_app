@@ -4,7 +4,6 @@ import './globals.css';
 import { headers } from 'next/headers';
 import { auth } from '@/lib/auth';
 import Header from '@/components/Header';
-import { SessionType } from '@/utils/types';
 import { Footer } from '@/components/Footer';
 import { GlobalProvider } from './GlobalContext';
 import { globalService } from '@/services/global.service';
@@ -29,12 +28,18 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session: SessionType | null = await auth.api.getSession({
-    headers: await headers(),
-  });
+  // Fetch Session and Global Data in parallel
+  const [sessionRes, globalRes] = await Promise.allSettled([
+    auth.api.getSession({ headers: await headers() }),
+    globalService.getData(),
+  ]);
 
-  // Fetch Global Data (Header/Footer content)
-  const globalData = await globalService.getData();
+  // Safely extract results
+  const session = sessionRes.status === 'fulfilled' ? sessionRes.value : null;
+  const globalData = globalRes.status === 'fulfilled' ? globalRes.value : null;
+
+  // show a warning or just provide an empty default
+  const hasDbConnection = session !== null;
 
   return (
     <html lang="en">
@@ -42,6 +47,11 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable}  antialiased`}
         cz-shortcut-listen="true"
       >
+        {!hasDbConnection && (
+          <div className="p-4 bg-red-100 text-red-800 text-center">
+            Database connection currently unavailable.
+          </div>
+        )}
         <GlobalProvider data={globalData} session={session}>
           <Header />
           <div className="min-h-screen"> {children}</div>

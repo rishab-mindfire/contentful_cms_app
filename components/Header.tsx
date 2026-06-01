@@ -5,16 +5,22 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import SystemStatus from './error/SystemStatus';
 
 export default function Header() {
   // global data from the Context
   const { session, globalData } = useGlobal();
-  if (!globalData?.header) return null;
+  if (!globalData?.header)
+    return (
+      <>
+        <SystemStatus message="Unable to connect to our content server." />
+      </>
+    );
   const headerData = globalData?.header;
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
-
+  console.log('hello  :::: ', globalData);
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,37 +1,24 @@
-/**
- * main client for api call
- *
- */
-type NextRequestInit = RequestInit & {
-  next?: {
-    revalidate?: number | false;
-    tags?: string[];
-  };
-};
-
-const BASE_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
-const API_TOKEN = process.env.STRAPI_API_TOKEN;
+//  main client for api call (interceptor)
 
 export const apiClient = {
-  // Add <T> here to make the function generic
-  get: async <T>(path: string, customOptions: NextRequestInit = {}): Promise<T> => {
-    const url = `${BASE_URL}/api${path.startsWith('/') ? path : `/${path}`}`;
+  get: async <T>(path: string): Promise<T | null> => {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api${path.startsWith('/') ? path : `/${path}`}`;
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(process.env.STRAPI_API_TOKEN
+            ? { Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}` }
+            : {}),
+        },
+      });
 
-    const options: NextRequestInit = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(API_TOKEN ? { Authorization: `Bearer ${API_TOKEN}` } : {}),
-      },
-      ...customOptions,
-    };
-
-    const res = await fetch(url, options);
-
-    if (!res.ok) {
-      throw new Error(`API Error: ${res.statusText}`);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (error) {
+      console.error('API Connection Failed:', error);
+      return null;
     }
-
-    return (await res.json()) as T;
   },
 };
