@@ -258,6 +258,28 @@ export interface Article {
   author: Author;
 }
 
+interface pagination {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
+}
 export interface ArticlesApiResponse {
   data: Article[];
+  meta: {
+    pagination: pagination;
+  };
+}
+
+//single Article
+export interface SingleArticleApiResponse {
+  data: Article;
+  meta: {
+    pagination?: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
 }
