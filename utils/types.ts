@@ -1,7 +1,10 @@
+import { type BlocksContent } from '@strapi/blocks-react-renderer';
+
 // interface for context
 export interface GlobalContextValue {
-  globalData: GlobalData | null;
+  globalData: GlobalData;
   session: SessionType | null;
+  isDbDown: boolean;
 }
 
 type UserType = {
@@ -227,3 +230,34 @@ export interface LandingPageData {
 export type BlockComponentMap = {
   [K in PageBlock['__component']]: React.ComponentType<Extract<PageBlock, { __component: K }>>;
 };
+
+//Articles type
+
+export interface StrapiImage {
+  id: number;
+  url: string;
+  alternativeText: string | null;
+}
+
+export interface Author {
+  id: number;
+  fullName: string;
+  bio: string;
+  image: StrapiImage;
+}
+
+export interface Article {
+  id: number;
+  documentId: string;
+  title: string;
+  description: string;
+  slug: string;
+  content: BlocksContent;
+  createdAt: string;
+  featuredImage: StrapiImage;
+  author: Author;
+}
+
+export interface ArticlesApiResponse {
+  data: Article[];
+}

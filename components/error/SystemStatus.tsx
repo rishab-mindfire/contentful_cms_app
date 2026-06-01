@@ -1,7 +1,8 @@
+'use client';
 export default function SystemStatus({ message }: { message?: string }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[50vh] p-8 text-center">
-      <h2 className="text-2xl font-bold text-gray-800">System Unavailable</h2>
+      <h2 className="text-2xl font-bold text-gray-800">Strapi Unavailable</h2>
       <p className="mt-2 text-gray-600 max-w-sm">
         {message ||
           'We are currently experiencing technical difficulties. Please check back later.'}

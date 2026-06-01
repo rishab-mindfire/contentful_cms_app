@@ -6,9 +6,9 @@ import { signIn, signInSocial, signUp } from '../../lib/actions/auth-action';
 import { Loader } from '@/components/ui/loader';
 import { ResultRes } from '@/utils/types';
 import Link from 'next/link';
-import { useGlobal } from '../GlobalContext';
 import Image from 'next/image';
 import { getFullUrl } from '@/utils/urlCreator';
+import { useGlobal } from '../GlobalContext';
 
 export default function AuthClientPage() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -61,8 +61,16 @@ export default function AuthClientPage() {
   };
 
   // logo data from the Context
-  const { globalData } = useGlobal();
+  const { globalData, isDbDown } = useGlobal();
   const loginData = globalData.login;
+
+  if (isDbDown) {
+    return (
+      <div className="p-4 text-red-600 text-center">
+        Configuration currently unavailable. Please check your connection.
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen from-blue-50 to-indigo-100">

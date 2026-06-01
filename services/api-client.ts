@@ -1,16 +1,20 @@
-//  main client for api call (interceptor)
+// @/utils/api-client.ts
 
 export const apiClient = {
-  get: async <T>(path: string): Promise<T | null> => {
+  get: async <T>(path: string, options: RequestInit = {}): Promise<T | null> => {
     try {
-      const url = `${process.env.NEXT_PUBLIC_STRAPI_URL}/api${path.startsWith('/') ? path : `/${path}`}`;
+      const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
+      const url = `${baseUrl}/api${path.startsWith('/') ? path : `/${path}`}`;
+
       const res = await fetch(url, {
         method: 'GET',
+        ...options, // Spread incoming Next.js tags, caching configurations, or ISR intervals here
         headers: {
           'Content-Type': 'application/json',
           ...(process.env.STRAPI_API_TOKEN
             ? { Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}` }
             : {}),
+          ...options.headers, // Merge user custom headers if they exist
         },
       });
 
