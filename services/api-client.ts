@@ -1,5 +1,4 @@
-// @/utils/api-client.ts
-
+// main api interceptor for Strapi API calls
 export const apiClient = {
   get: async <T>(path: string, options: RequestInit = {}): Promise<T | null> => {
     try {
@@ -8,7 +7,7 @@ export const apiClient = {
 
       const res = await fetch(url, {
         method: 'GET',
-        ...options, // Spread incoming Next.js tags, caching configurations, or ISR intervals here
+        ...options, // Spread incoming Next.js tags, caching configurations, or ISR intervals
         headers: {
           'Content-Type': 'application/json',
           ...(process.env.STRAPI_API_TOKEN

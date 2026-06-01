@@ -1,5 +1,4 @@
 import { SectionHeadingBlock } from '@/utils/types';
-
 export default function SectionHeading({ heading, subHeading }: SectionHeadingBlock) {
   return (
     <section className="py-12 text-center">

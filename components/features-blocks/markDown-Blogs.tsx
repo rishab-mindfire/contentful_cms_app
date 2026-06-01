@@ -1,4 +1,3 @@
-// @/components/Markdown.tsx
 import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer';
 
 interface MarkdownProps {
