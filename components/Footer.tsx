@@ -2,7 +2,7 @@
 import { useGlobal } from '@/app/GlobalContext';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getFullUrl } from '@/utils/urlCreator';
+import { getFullUrl } from '@/utils/helperFunctions';
 
 export const Footer = () => {
   const { globalData } = useGlobal();

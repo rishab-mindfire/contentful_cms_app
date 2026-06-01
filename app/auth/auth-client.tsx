@@ -7,8 +7,8 @@ import { Loader } from '@/components/ui/loader';
 import { ResultRes } from '@/utils/types';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getFullUrl } from '@/utils/urlCreator';
 import { useGlobal } from '../GlobalContext';
+import { getFullUrl } from '@/utils/helperFunctions';
 
 export default function AuthClientPage() {
   const [isSignIn, setIsSignIn] = useState(true);

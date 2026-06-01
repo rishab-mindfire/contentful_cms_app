@@ -1,23 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Markdown from '@/components/features-blocks/markDown-Blogs';
-import { getArticles } from '@/services/features.service';
-import { getFullUrl } from '@/utils/urlCreator';
+import { getArticles } from '@/services/blog.service';
+import { getFullUrl } from '@/utils/helperFunctions';
 
 export default async function BlogPage() {
   const response = await getArticles();
   const articles = response.data;
 
   return (
-    <main className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-gray-50 py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         <header className="mb-14 text-center">
-          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
-            Our Latest Articles
-          </h1>
-          <p className="mt-4 text-xl text-gray-500 max-w-2xl mx-auto">
-            Stay up to date with recruitment events, news, and technical documentation.
-          </p>
+          <h3 className="font-extrabold text-gray-900 tracking-tight sm:text-5xl">
+            Latest Articles
+          </h3>
         </header>
 
         {/* Articles Feed */}

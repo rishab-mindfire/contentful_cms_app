@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { getFullUrl } from '@/utils/urlCreator';
 import { ContentWithImageBlock } from '@/utils/types';
+import { getFullUrl } from '@/utils/helperFunctions';
 
 export default function ContentWithImage({ heading, image, reversed }: ContentWithImageBlock) {
   return (

@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { getFullUrl } from '@/utils/urlCreator';
 import { PersonCardBlock } from '@/utils/types';
+import { getFullUrl } from '@/utils/helperFunctions';
 
 export default function PersonCard({ personName, personJob, aboutPerson, image }: PersonCardBlock) {
   return (
@@ -10,7 +10,7 @@ export default function PersonCard({ personName, personJob, aboutPerson, image }
           <Image src={getFullUrl(image.url)} alt={personName} fill className="object-cover" />
         </div>
 
-        {/* Content Container (Right on desktop, Bottom on mobile) */}
+        {/* Content Container  */}
         <div className="flex flex-col text-center md:text-left">
           <h3 className="text-3xl font-bold text-gray-900 mb-1">{personName}</h3>
           <p className="text-indigo-600 font-semibold text-lg mb-4">{personJob}</p>
