@@ -1,16 +1,16 @@
 # Public Product Website - CMS Platform
 
-## **1. Project Title**
+## 1. Project Title
 
 Public Product Website - CMS
 
 ---
 
-## **2. Overview**
+## 2. Overview
 
 This project is a high-performance, modular frontend built using the Next.js App Router and Tailwind CSS. It functions as a dynamic rendering engine that decouples content management from your presentation layer by pulling data directly from a Headless CMS API. Instead of hardcoding pages, the application acts as an intelligent receiver that parses structured JSON data from 4 specific endpoints and automatically maps them to flexible, responsive React components on the frontend.
 
-## **3. Folder Structure**
+## 3. Folder Structure and files
 
 ```
 PRODUCT_CMS/
@@ -51,7 +51,7 @@ PRODUCT_CMS/
 |
 ```
 
-## **5. Installation & Setup**
+## 4. Installation & Setup
 
 ```
 # 1. Clone & Install
@@ -79,17 +79,7 @@ NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 
 ```
 
-## Setup and run app
-
-### 1. installation forntend
-
-```
-   cd PRODUCT_CMS
-   npm i
-   npm run dev
-```
-
-## **6. Scripts**
+## 5. Scripts
 
 | Command         | Description        |
 | --------------- | ------------------ |
@@ -105,7 +95,7 @@ NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 | **Styling**  | tailwind CSS                       |
 | **Testing**  | Vitest + React Testing Library     |
 
-## **7. User flow **
+## 6. User flow
 
 ```mermaid
 flowchart TD
