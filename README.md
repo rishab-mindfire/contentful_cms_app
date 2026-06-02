@@ -79,7 +79,15 @@ NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 
 ```
 
-## 5. Scripts
+## 5. setup docker for pg admin and postgre SQL
+
+```
+docker compose up -d
+```
+
+check docker file for DB setup use migration commands
+
+## 6. Scripts
 
 | Command         | Description        |
 | --------------- | ------------------ |
@@ -95,7 +103,7 @@ NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 | **Styling**  | tailwind CSS                       |
 | **Testing**  | Vitest + React Testing Library     |
 
-## 6. User flow
+## 7. User flow
 
 ```mermaid
 flowchart TD
