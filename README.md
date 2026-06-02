@@ -105,28 +105,25 @@ NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 | **Styling**  | tailwind CSS                       |
 | **Testing**  | Vitest + React Testing Library     |
 
-## **7. System Architecture**
+## **7. User flow **
 
 ```mermaid
 flowchart TD
 
-%% 1. PUBLIC EXPERIENCE
+%% 1. PUBLIC LANDING PAGE
     A[User Visits App] --> LP[Landing Page: /]
     LP --> Explore[Explore Public CMS Content]
 
-%% 2. AUTHENTICATION GATEWAY
+%% 2. AUTHENTICATION STREAM
     Explore --> |Clicks Login| Auth{Authenticated?}
     Auth -- No --> Login[Login Page / Better-Auth]
     Login --> |Success| SetAuth[Set Auth State]
 
-%% 3. UNLOCKED ROUTES (POST-LOGIN)
+%% 3. STRAIGHT-FORWARD ROUTING
     Auth -- Yes --> UnlockedRoutes{Choose Route}
     SetAuth --> UnlockedRoutes
 
-    UnlockedRoutes --> |View Metrics| Dash[Dashboard: /dashboard]
-    UnlockedRoutes --> |Read Articles| Blog[Blog Section: /blog]
-    UnlockedRoutes --> |Check Tiers| Pricing[Pricing Details: /pricing]
-
-%% 4. BACK TO HUB
-    Dash & Blog & Pricing --> |Navigate Home| LP
+    UnlockedRoutes --> |View Metrics| Dash["Dashboard (/dashboard)"]
+    UnlockedRoutes --> |Read Articles| Blog["Blog Section (/blog)"]
+    UnlockedRoutes --> |Check Tiers| Pricing["Pricing Details (/pricing)"]
 ```
