@@ -68,7 +68,7 @@ describe('DashboardClientPage Component', () => {
 
     // Assert profile header parameters exist
     expect(
-      screen.getByRole('heading', { level: 2, name: 'Welcome, Jane Doe' }),
+      screen.getByRole('heading', { level: 1, name: /welcome,\s*jane doe/i }),
     ).toBeInTheDocument();
     expect(screen.getByText('jane.doe@platform.com')).toBeInTheDocument();
 
@@ -76,7 +76,7 @@ describe('DashboardClientPage Component', () => {
     const avatarImg = screen.getByTestId('mock-avatar');
     expect(avatarImg).toBeInTheDocument();
     expect(avatarImg).toHaveAttribute('src', '/custom-avatar.png');
-    expect(avatarImg).toHaveAttribute('alt', 'Jane Doe');
+    expect(avatarImg).toHaveAttribute('alt', "Jane Doe's profile avatar");
   });
 
   it('falls back to default asset string when user image property is absent or null', () => {
@@ -92,19 +92,20 @@ describe('DashboardClientPage Component', () => {
 
     const avatarImg = screen.getByTestId('mock-avatar');
     expect(avatarImg).toHaveAttribute('src', '/default-avatar.png');
-    expect(avatarImg).toHaveAttribute('alt', 'Jane Doe');
+    expect(avatarImg).toHaveAttribute('alt', "Jane Doe's profile avatar");
   });
 
   it('triggers sign out routine and pushes user cleanly to authorization portal route', async () => {
     const user = userEvent.setup();
-    vi.mocked(signOut).mockResolvedValue({ success: false });
+
+    vi.mocked(signOut).mockResolvedValue({ success: true });
 
     render(<DashboardClientPage session={mockSession} />);
 
     const signOutBtn = screen.getByRole('button', { name: 'Sign Out' });
     await user.click(signOutBtn);
 
-    //Server cleared state, then app handled navigation redirection
+    // Server cleared state, then app handled navigation redirection
     expect(signOut).toHaveBeenCalledTimes(1);
     expect(mockPush).toHaveBeenCalledWith('/auth');
   });

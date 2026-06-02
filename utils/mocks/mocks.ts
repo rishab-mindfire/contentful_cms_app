@@ -1,4 +1,7 @@
+import { ComponentProps } from 'react';
 import { PricingData } from '../types';
+import CardGrid from '@/components/landing-blocks/CardGrid';
+import ContentWithImage from '@/components/landing-blocks/ContentWithImage';
 
 export const mockArticle = {
   id: 123,
@@ -120,6 +123,43 @@ export const mockResponseArticle = {
   meta: { pagination: { page: 1, pageSize: 5, pageCount: 1, total: 1 } },
 };
 
+// mock for card details
+export const mockProps: ComponentProps<typeof CardGrid> = {
+  id: 1,
+  __component: 'blocks.card-grid',
+  cards: [
+    { id: 1, heading: 'Feature One', text: 'This is the first feature description.' },
+    { id: 2, heading: 'Feature Two', text: 'This is the second feature description.' },
+  ],
+};
+
+///
+export const baseProps: ComponentProps<typeof ContentWithImage> = {
+  id: 1,
+  __component: 'blocks.component-content-with-image',
+  heading: 'Illustration for Visual Breakdown',
+  reversed: false,
+  image: {
+    id: 1,
+    documentId: 'file-doc-xyz-789',
+    url: '/mock-graphic.jpg',
+    alternativeText: 'Illustration for Visual Breakdown',
+  },
+  content: [
+    {
+      type: 'paragraph',
+      children: [{ type: 'text', text: '' }],
+    },
+  ],
+  link: {
+    id: 1,
+    href: '#',
+    lable: 'Learn More',
+    isExternal: false,
+    isButtonLink: false,
+    type: 'PRIMARY',
+  },
+};
 // Mock data for PricingData
 export const mockPricingData: PricingData = {
   mainHeader: 'Choose the Right Plan',
