@@ -8,7 +8,7 @@ Public Product Website - CMS
 
 ## 2. Overview
 
-This project is a high-performance, modular frontend built using the Next.js App Router and Tailwind CSS. It functions as a dynamic rendering engine that decouples content management from your presentation layer by pulling data directly from a Headless CMS API. Instead of hardcoding pages, the application acts as an intelligent receiver that parses structured JSON data from 4 specific endpoints and automatically maps them to flexible, responsive React components on the frontend.
+This project is a high-performance, modular frontend built using the Next.js App Router and Tailwind CSS. It functions as a dynamic rendering engine that decouples content management from your presentation layer by pulling data directly from a Headless CMS API. Instead of hardcoding pages, the application acts as an intelligent receiver that parses structured JSON data from specific endpoints and automatically maps them to flexible, responsive React components on the frontend.
 
 ## 3. Folder Structure and files
 
@@ -54,9 +54,9 @@ PRODUCT_CMS/
 ## 4. Installation & Setup
 
 ```
-# 1. Clone & Install
 git clone https://github.com/rishab-mindfire/strapi-backend
 cd PRODUCT_CMS
+npm install
 ```
 
 ### frontend env.example
