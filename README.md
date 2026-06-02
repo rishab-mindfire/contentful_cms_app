@@ -143,7 +143,7 @@ Routes --> |Route: /blog| Blog[blog/page.tsx: Article Archive]
 Blog --> BlogService[blog.service.ts]
 BlogService --> |GET /api/articles| StrapiArticles[Strapi: Article Records]
 StrapiArticles --> |Render List| ArchiveGrid[Dynamic Article Grid]
-ArchiveGrid --> |Click Post ID| SingleBlog[blog/[id]/page.tsx: Article View]
+ArchiveGrid --> |Click Post ID| SingleBlog["blog/[id]/page.tsx: Article View"]
 
 %% Route C: Pricing Details
 Routes --> |Route: /pricing| Pricing[pricing/page.tsx]
@@ -155,5 +155,5 @@ StrapiPricing --> |Hydrate Blocks| PriceCard[PriceCard.tsx] & FAQSection[FAQSect
 Routes --> |Route: /dashboard| Dash{Auth Guard Check}
 Dash --> |Unauthenticated| C
 Dash --> |Authenticated| DashboardPage[dashboard/page.tsx]
-DashboardPage --> DashClient[dashboard-client.tsx: Private Interactive Client Workspace]
+DashboardPage --> DashClient["dashboard-client.tsx: Private Interactive Client Workspace"]
 ```
