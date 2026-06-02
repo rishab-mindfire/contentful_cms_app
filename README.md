@@ -110,50 +110,23 @@ NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 ```mermaid
 flowchart TD
 
-%% 1. ENTRANCE & AUTHENTICATION FLOW
-A[User Opens App] --> B{Is Authenticated?}
+%% 1. PUBLIC EXPERIENCE
+    A[User Visits App] --> LP[Landing Page: /]
+    LP --> Explore[Explore Public CMS Content]
 
-B -- No --> C[Login Page / Better-Auth]
-C --> D[Provider Sign-In: GitHub / Google]
-D --> E[Validate Session & Cookies]
+%% 2. AUTHENTICATION GATEWAY
+    Explore --> |Clicks Login| Auth{Authenticated?}
+    Auth -- No --> Login[Login Page / Better-Auth]
+    Login --> |Success| SetAuth[Set Auth State]
 
-E -- Invalid/Fail --> F[Show Errors / Redirect]
-E -- Valid/Success --> G[Set Auth State & Tokens]
+%% 3. UNLOCKED ROUTES (POST-LOGIN)
+    Auth -- Yes --> UnlockedRoutes{Choose Route}
+    SetAuth --> UnlockedRoutes
 
-%% 2. PUBLIC ROUTING & STRAPI DATA INGESTION
-B -- Yes --> LP[Landing Page: /]
-G --> LP
+    UnlockedRoutes --> |View Metrics| Dash[Dashboard: /dashboard]
+    UnlockedRoutes --> |Read Articles| Blog[Blog Section: /blog]
+    UnlockedRoutes --> |Check Tiers| Pricing[Pricing Details: /pricing]
 
-%% Global Components Ingestion (Always Loaded)
-LP & Blog & Pricing & Dash --> GlobalService[aglobal.service.ts]
-GlobalService --> |GET /api/globle| StrapiGlobal[Strapi: Global Layout Content]
-StrapiGlobal --> |Hydrates| Navbar[Navbar.tsx] & Footer[Footer.tsx]
-
-%% Dynamic Sub-Route Options
-LP --> Routes{Choose Route}
-
-%% Route A: Landing Page Block Parsing
-Routes --> |Default Route: /| LandingPage[page.tsx]
-LandingPage --> LandingService[landing-page.service]
-LandingService --> |GET /api/landing-page| StrapiLanding[Strapi: Dynamic Components]
-StrapiLanding --> |Polymorphic Render| Hero[Hero.tsx] & Features[Features.tsx] & Testimonials[Testimonials.tsx]
-
-%% Route B: Blog Section
-Routes --> |Route: /blog| Blog[blog/page.tsx: Article Archive]
-Blog --> BlogService[blog.service.ts]
-BlogService --> |GET /api/articles| StrapiArticles[Strapi: Article Records]
-StrapiArticles --> |Render List| ArchiveGrid[Dynamic Article Grid]
-ArchiveGrid --> |Click Post ID| SingleBlog["blog/[id]/page.tsx: Article View"]
-
-%% Route C: Pricing Details
-Routes --> |Route: /pricing| Pricing[pricing/page.tsx]
-Pricing --> PricingService[pricing.service]
-PricingService --> |GET /api/pricings| StrapiPricing[Strapi: Matrix Data]
-StrapiPricing --> |Hydrate Blocks| PriceCard[PriceCard.tsx] & FAQSection[FAQSection.tsx]
-
-%% 3. AUTHENTICATED ACCESS ONLY
-Routes --> |Route: /dashboard| Dash{Auth Guard Check}
-Dash --> |Unauthenticated| C
-Dash --> |Authenticated| DashboardPage[dashboard/page.tsx]
-DashboardPage --> DashClient["dashboard-client.tsx: Private Interactive Client Workspace"]
+%% 4. BACK TO HUB
+    Dash & Blog & Pricing --> |Navigate Home| LP
 ```
