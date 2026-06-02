@@ -1,3 +1,5 @@
+import { PricingData } from '../types';
+
 export const mockArticle = {
   id: 123,
   documentId: 'doc-abc-456',
@@ -42,7 +44,7 @@ export const mockGlobalContextValues = {
     Title: 'Core CMS Application',
     Description: 'Global Application Configuration Settings',
 
-    // 1. Matches your HeaderType interface
+    //  HeaderType interface
     header: {
       id: 1,
       text: 'Welcome Header Text',
@@ -69,7 +71,7 @@ export const mockGlobalContextValues = {
       },
     },
 
-    // 2. Matches your LoginType interface with 'id' explicitly at the root level
+    // LoginType interface with 'id' explicitly at the root level
     login: {
       id: 1,
       mainText: 'My CMS Platform',
@@ -93,7 +95,7 @@ export const mockGlobalContextValues = {
       },
     },
 
-    // 3. Matches your FooterType interface
+    // FooterType interface
     footer: {
       id: 1,
       text: 'Platform footer description copy.',
@@ -111,4 +113,61 @@ export const mockGlobalContextValues = {
       socialLinks: [],
     },
   },
+};
+
+export const mockResponseArticle = {
+  data: [{ id: 1, attributes: { title: 'Test Article' } }],
+  meta: { pagination: { page: 1, pageSize: 5, pageCount: 1, total: 1 } },
+};
+
+// Mock data for PricingData
+export const mockPricingData: PricingData = {
+  mainHeader: 'Choose the Right Plan',
+  subHeader: 'Simple, transparent pricing for everyone.',
+  priceCard: [
+    {
+      id: 1,
+      pricingHeader: 'Basic Plan',
+      pricingLable: 'Popular',
+      PricingRate: '$19/mo',
+      pricingBenefits: 'Benefit 1\nBenefit 2\nBenefit 3',
+      pricingButton: [
+        {
+          id: 1,
+          lable: 'Get Started',
+          type: 'PRIMARY',
+          href: '/',
+          isExternal: false,
+          isButtonLink: false,
+        },
+      ],
+    },
+    {
+      id: 2,
+      pricingHeader: 'Pro Plan',
+      pricingLable: 'Best Value',
+      PricingRate: '$49/mo',
+      pricingBenefits: 'All Basic benefits\nPriority Support',
+      pricingButton: [
+        {
+          id: 2,
+          lable: 'Buy Pro',
+          type: 'PRIMARY',
+          href: '/',
+          isExternal: true,
+          isButtonLink: false,
+        },
+        {
+          id: 3,
+          lable: 'Learn More',
+          type: 'SECONDARY',
+          href: '',
+          isExternal: true,
+          isButtonLink: false,
+        },
+      ],
+    },
+  ],
+  id: 0,
+  documentId: '',
 };

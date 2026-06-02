@@ -15,16 +15,16 @@ export default async function BlogPage({ searchParams }: Props) {
   const { pageCount } = meta.pagination;
 
   return (
-    <main className="min-h-screen bg-white py-2 px-6">
+    <main className="min-h-screen bg-white py-12 px-6">
       <div className="max-w-4xl mx-auto">
-        <header className="mb-10">
-          <h3 className="text-3xl font-extrabold text-gray-900 tracking-tight mb-4">Blogs</h3>
-          <div className="w-30 h-1 bg-indigo-600 rounded-full" />
+        <header className="mb-12">
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight mb-4">Blogs</h1>
+          <div className="w-30 h-1 bg-indigo-600 rounded-full" aria-hidden="true" />
         </header>
 
-        {/* Articles Feed */}
-        <div className="space-y-10">
-          {articles.map((article) => {
+        {/* Articles Feed List Container */}
+        <div className="space-y-16" role="feed" aria-label="Blog posts feed">
+          {articles.map((article, index) => {
             const formattedDate = new Date(article.createdAt).toLocaleDateString('en-US', {
               month: 'short',
               day: 'numeric',
@@ -32,14 +32,24 @@ export default async function BlogPage({ searchParams }: Props) {
             });
 
             return (
-              <article key={article.id} className="group">
-                <Link href={`/blog/${article.documentId}`} className="block">
+              <article
+                key={article.id}
+                className="group"
+                // Inform screen reader positions if infinite/paginated list tracking applies
+                aria-posinset={index + 1}
+                aria-setsize={articles.length}
+              >
+                <Link
+                  href={`/blog/${article.documentId}`}
+                  className="block rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-indigo-500"
+                >
                   <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
                     {/* Image Container */}
                     <div className="md:col-span-2 relative aspect-4/3 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-500">
                       <Image
-                        src={getFullUrl(article.featuredImage.url)}
-                        alt={article.title}
+                        src={getFullUrl(article?.featuredImage?.url)}
+                        // Decorative fallback since title text is immediately read next door
+                        alt=""
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                         sizes="(max-width: 768px) 100vw, 400px"
@@ -49,8 +59,8 @@ export default async function BlogPage({ searchParams }: Props) {
                     {/* Content */}
                     <div className="md:col-span-3 space-y-4">
                       <div className="flex items-center gap-3 text-sm font-semibold text-indigo-600 uppercase tracking-wider">
-                        <span>{formattedDate}</span>
-                        <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                        <time dateTime={article.createdAt}>{formattedDate}</time>
+                        <span className="w-1 h-1 bg-gray-300 rounded-full" aria-hidden="true" />
                       </div>
 
                       <h2 className="text-3xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">
@@ -61,8 +71,9 @@ export default async function BlogPage({ searchParams }: Props) {
                         {article.description}
                       </p>
 
-                      <div className="pt-2 font-medium text-gray-900 flex items-center group-hover:gap-2 transition-all">
-                        Read more <span>&rarr;</span>
+                      <div className="pt-2 font-medium text-gray-900 flex items-center gap-1 group-hover:gap-2 transition-all">
+                        <span>Read more</span>
+                        <span aria-hidden="true">&rarr;</span>
                       </div>
                     </div>
                   </div>
@@ -72,16 +83,23 @@ export default async function BlogPage({ searchParams }: Props) {
           })}
         </div>
 
-        {/* Pagination */}
+        {/* Pagination Landmark */}
         {pageCount > 1 && (
-          <nav className="mt-24 pt-12 border-t border-gray-100 flex justify-between items-center">
-            <PaginationLink page={currentPage - 1} label="Previous" disabled={currentPage <= 1} />
-            <span className="text-sm font-medium text-gray-500">
+          <nav
+            className="mt-24 pt-12 border-t border-gray-100 flex justify-between items-center"
+            aria-label="Pagination navigation"
+          >
+            <PaginationLink
+              page={currentPage - 1}
+              label="Previous page"
+              disabled={currentPage <= 1}
+            />
+            <span className="text-sm font-medium text-gray-500" aria-current="page">
               Page {currentPage} of {pageCount}
             </span>
             <PaginationLink
               page={currentPage + 1}
-              label="Next"
+              label="Next page"
               disabled={currentPage >= pageCount}
             />
           </nav>
@@ -104,7 +122,15 @@ function PaginationLink({
   return (
     <Link
       href={`/blog?page=${page}`}
-      className={`px-6 py-3 rounded-xl border border-gray-200 font-semibold transition-all ${disabled ? 'opacity-30 cursor-not-allowed' : 'hover:border-indigo-600 hover:text-indigo-600'}`}
+      aria-disabled={disabled}
+      tabIndex={disabled ? -1 : 0}
+      onClick={(e) => disabled && e.preventDefault()}
+      className={`px-6 py-3 rounded-xl border border-gray-200 font-semibold transition-all outline-none
+    ${
+      disabled
+        ? 'opacity-30 cursor-not-allowed pointer-events-none'
+        : 'hover:border-indigo-600 hover:text-indigo-600 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600'
+    }`}
     >
       {label}
     </Link>
