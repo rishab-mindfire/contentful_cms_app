@@ -24,45 +24,59 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-gray-50 py-4 px-6 relative">
-      {/* Navigation */}
-      <div className="sticky top-20 z-5 hidden md:block">
+      {/* Navigation - Added landmark role & focus handling */}
+      <nav className="sticky top-20 z-10 hidden md:block" aria-label="Back navigation">
         <Link
           href="/blog"
-          className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center"
+          className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 inline-flex items-center gap-1 transition-colors rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          &larr; Back to articles
+          <span aria-hidden="true">&larr;</span> Back to articles
         </Link>
-      </div>
+      </nav>
+
       <article className="max-w-4xl mx-auto bg-white p-8 md:p-16 rounded-3xl shadow-sm border border-gray-100">
-        {/* Header */}
+        {/* Header Section */}
         <header className="mb-10 text-center">
-          <div className="text-sm font-bold text-indigo-600 uppercase tracking-widest mb-4">
+          <time
+            dateTime={article?.createdAt}
+            className="text-sm font-bold text-indigo-600 uppercase tracking-widest mb-4 block"
+          >
             {formattedDate}
-          </div>
+          </time>
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-6">
             {article.title}
           </h1>
-          <p className="text-xl text-gray-600 italic">"{article.description}"</p>
+          {article.description && (
+            <p className="text-xl text-gray-600 italic">
+              <span className="sr-only">Summary: </span>"{article.description}"
+            </p>
+          )}
         </header>
 
-        {/* Featured Image */}
+        {/* Featured Image - Informative hidden label context */}
         <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl mb-12">
           <Image
-            src={getFullUrl(article.featuredImage.url)}
-            alt={article.title}
+            src={getFullUrl(article?.featuredImage?.url)}
+            alt={article?.title ? `Cover image for ${article.title}` : 'Article cover presentation'}
             fill
             className="object-cover"
             priority
           />
         </div>
 
-        {/* Content - Using prose-lg for professional readability */}
-        <div className="prose prose-lg prose-indigo max-w-none mb-16">
+        {/* Content Section - Explicit reading boundary context */}
+        <section
+          aria-label="Article body content"
+          className="prose prose-lg prose-indigo max-w-none mb-16"
+        >
           {article.content && <BlocksRenderer content={article.content} />}
-        </div>
+        </section>
 
-        {/* Author Footer Card */}
-        <div className="bg-white border border-gray-100 p-8 rounded-2xl flex items-center gap-6 shadow-sm">
+        {/* Author Footer Card - Swapped to complementary structure */}
+        <footer
+          aria-label="About the author"
+          className="bg-white border border-gray-100 p-8 rounded-2xl flex flex-col sm:flex-row items-center gap-6 shadow-sm"
+        >
           <div className="relative w-20 h-20 rounded-full overflow-hidden shrink-0">
             <Image
               src={
@@ -70,20 +84,24 @@ export default async function BlogPostPage({ params }: Props) {
                   ? getFullUrl(article.author.image.url)
                   : '/default-avatar.png'
               }
-              alt={article.author?.fullName || 'Author'}
+              alt={
+                article.author?.fullName
+                  ? `${article.author.fullName} avatar picture`
+                  : 'Author default avatar placeholder'
+              }
               fill
               className="object-cover"
             />
           </div>
-          <div>
-            <h4 className="text-lg font-bold text-gray-900">
-              {article.author?.fullName || 'Staff Writer'}
-            </h4>
-            <p className="text-gray-500">
+          <div className="text-center sm:text-left">
+            <h2 className="text-lg font-bold text-gray-900">
+              By {article.author?.fullName || 'Staff Writer'}
+            </h2>
+            <p className="text-gray-500 text-sm mt-1">
               {article.author?.bio || 'Expert contributor at our publication.'}
             </p>
           </div>
-        </div>
+        </footer>
       </article>
     </main>
   );

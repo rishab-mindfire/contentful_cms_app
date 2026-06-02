@@ -38,7 +38,7 @@ export default function BlockRenderer({ block }: Props) {
 
   return (
     <Suspense fallback={<div className="animate-pulse h-20 w-full" aria-hidden="true" />}>
-      <BlockComponent {...block} />
+      <BlockComponent key={block.id || `${block.__component}-${block.id}`} {...block} />
     </Suspense>
   );
 }

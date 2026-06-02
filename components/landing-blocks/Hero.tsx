@@ -24,7 +24,7 @@ export default function Hero({ heading, text, links, image }: HeroBlock) {
         </div>
         <div className="relative aspect-video">
           <Image
-            src={getFullUrl(image.url)}
+            src={getFullUrl(image?.url)}
             alt={image.alternativeText || heading}
             fill
             className="object-cover rounded-2xl"

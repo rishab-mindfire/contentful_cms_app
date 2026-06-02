@@ -16,35 +16,42 @@ export default function DashboardClientPage({ session }: { session: SessionType 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-6">
       <main className="max-w-4xl mx-auto">
-        {/* Profile Card */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+        {/* Profile Card Landmark */}
+        <section
+          aria-label="User Profile Summary"
+          className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8"
+        >
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            {/* User Info */}
+            {/* User Info Wrapper */}
             <div className="flex items-center gap-6">
-              <div className="relative w-20 h-20 rounded-full overflow-hidden border-4 border-gray-50 shadow-md">
+              <div className="relative w-20 h-20 rounded-full overflow-hidden border-4 border-gray-50 shadow-md shrink-0">
                 <Image
-                  src={user.image || '/default-avatar.png'}
-                  alt={user.name || 'User avatar'}
+                  src={user?.image || '/default-avatar.png'}
+                  alt={user?.name ? `${user.name}'s profile avatar` : 'User profile avatar'}
                   fill
                   className="object-cover"
                 />
               </div>
+
               <div>
-                <h2 className="text-3xl font-bold text-gray-900">Welcome, {user.name}</h2>
-                <p className="text-lg text-gray-600">{user.email}</p>
-                <div className="w-12 h-1 bg-indigo-600 rounded-full mt-2" />
+                <h1 className="text-3xl font-bold text-gray-900">
+                  Welcome, {user?.name || 'User'}
+                </h1>
+                <p className="text-lg text-gray-600">{user?.email}</p>
+                <div className="w-12 h-1 bg-indigo-600 rounded-full mt-2" aria-hidden="true" />
               </div>
             </div>
 
-            {/* Sign Out Button */}
+            {/* Sign Out Button - Upgraded click behaviors and focus indicators */}
             <button
+              type="button"
               onClick={handleSignOut}
-              className="w-full md:w-auto px-6 py-3 font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-colors duration-200"
+              className="w-full md:w-auto px-6 py-3 font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-all duration-200 outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
             >
               Sign Out
             </button>
           </div>
-        </div>
+        </section>
       </main>
     </div>
   );
