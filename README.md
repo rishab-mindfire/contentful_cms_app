@@ -14,41 +14,49 @@ This project is a high-performance, modular frontend built using the Next.js App
 
 ```
 PRODUCT_CMS/
-├── app/                    # Next.js App Router Node
-│   ├── layout.tsx          # Ingests /api/globle for root context layouts
-│   ├── page.tsx            # Ingests /api/landing-page for Block layout parsing
+├── app/                           # Next.js App Router Node
+│   ├── layout.tsx                 # Ingests /api/globle for root context layouts
+│   ├── page.tsx                   # Ingests /api/landing-page for Block layout parsing
 │   ├── blog/
-│   │   ├── page.tsx        # Ingests /api/articles for dynamic grid archives
+│   │   ├── page.tsx               # Ingests /api/articles for dynamic grid archives
 │   │   └── [id]/
-│   │       └── page.tsx    # Single Article view via localized query params
+│   │       └── page.tsx           # Single Article view via localized query params
 │   └── pricing/
-│   │    └── page.tsx        # Ingests /api/pricings structure matrices
+│   │    └── page.tsx              # Ingests /api/pricings structure matrices
 │   └── dasboard/
-│       └── page.tsx        # Ingests /api/pricings structure matrices
+│       └── page.tsx               # Ingests /api/pricings structure matrices
 |       └──  dashboard-client.tsx  # Authenticated page
 |       ............
 |
-├── components/             # Polymorphic components triggered by dynamic templates
-│   ├── global/
-│       ├── Navbar.tsx
-│       └── Footer.tsx
+├── components/                     # Polymorphic components triggered by dynamic templates
+│   ├── error/
+│   |   ├── SystemStatus.tsx
+│   |
 │   ├── landing-block/
-│       ├── Hero.tsx
-│       ├── Features.tsx
-│       └── Testimonials.tsx
+│        ├── Hero.tsx
+│        ├── CardGrid.tsx.tsx
+│        └── ContentWithImage.tsx
+│        └── Faqs.tsx
+│        └── Markdown.tsx
 |           ..........
 |
-│   ├── pricing-block/
-│       ├── PriceCard.tsx
-│       └── FAQSection.tsx
-|             ........
+│   ├── pricing-block/                # pricing-block
+│   |    ├── PricingSection.tsx
+│   |
+│   ├── Footer.tsx
+│   ├── Header.tsx
+|            ..........
 
-├── services/             # Apic integrations
+├── services/                          # Apic integrations services
 |     ├── api-client.ts
 |     ├──blog.service.ts
 |     ├──aglobal.service.ts
 │
 |
+├── lib/                                # auth helper and render logic
+├── prisma/                             # DB schema
+├── utils/                              # testing mock data and constants, helper func, types
+
 ```
 
 ## 4. Installation & Setup
