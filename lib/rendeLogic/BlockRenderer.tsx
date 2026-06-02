@@ -19,7 +19,7 @@ const componentMap: BlockComponentMap = {
   'blocks.person-card': PersonCard,
   'blocks.faqs': Faqs,
   'blocks.component-content-with-image': ContentWithImage,
-};
+} as BlockComponentMap;
 
 interface Props {
   block: PageBlock;

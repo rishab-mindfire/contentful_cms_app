@@ -171,7 +171,7 @@ export interface ContentWithImageBlock {
   id: number;
   reversed: boolean;
   heading: string;
-  content: ContentNode[];
+  content: BlocksContent;
   image: Image;
   link: LinkType | null;
 }

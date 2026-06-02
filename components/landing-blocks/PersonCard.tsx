@@ -5,7 +5,7 @@ import { getFullUrl } from '@/utils/helperFunctions';
 export default function PersonCard({ personName, personJob, aboutPerson, image }: PersonCardBlock) {
   return (
     <section className="py-12 px-4 w-full flex justify-center">
-      <div className="max-w-4xl w-full bg-white rounded-2xl shadow-xl border border-gray-100 p-8 flex flex-col md:flex-row items-center gap-8">
+      <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl border border-gray-100 p-8 flex flex-col md:flex-row items-center gap-8">
         <div className="relative w-48 h-48 md:w-64 md:h-64 overflow-hidden rounded-full border-4 border-gray-50 shadow-md">
           <Image src={getFullUrl(image.url)} alt={personName} fill className="object-cover" />
         </div>
