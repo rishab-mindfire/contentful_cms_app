@@ -283,3 +283,52 @@ export interface SingleArticleApiResponse {
     };
   };
 }
+
+//pricing section
+export interface PricingButton {
+  id: number;
+  href: string | null;
+  lable: string;
+  isExternal: boolean;
+  isButtonLink: boolean;
+  type: 'PRIMARY' | 'SECONDARY';
+}
+
+export interface PriceCard {
+  id: number;
+  pricingHeader: string;
+  pricingLable: string;
+  PricingRate: string;
+  pricingBenefits: string;
+  pricingButton: PricingButton[];
+}
+
+export interface PricingData {
+  id: number;
+  documentId: string;
+  mainHeader: string;
+  subHeader: string;
+  priceCard: PriceCard[];
+}
+
+// @/utils/types.ts
+
+export interface PricingItem {
+  id: number;
+  documentId: string;
+  mainHeader: string;
+  subHeader: string;
+  priceCard: PriceCard[];
+}
+
+export interface PricingResponse {
+  data: PricingItem[];
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+}
