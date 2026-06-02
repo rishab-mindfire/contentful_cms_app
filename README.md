@@ -1,8 +1,8 @@
-# Public Product Website - CMS Platform
+# Public Product Website - CMS Platform (strapi)
 
 ## 1. Project Title
 
-Public Product Website - CMS
+Public Product Website - CMS with Strapi
 
 ---
 
