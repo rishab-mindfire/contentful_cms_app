@@ -2,7 +2,7 @@ import { ArticlesApiResponse, SingleArticleApiResponse } from '@/utils/types';
 import { apiClient } from './api-client';
 
 const REVALIDATE_TIME = 60;
-const POSTS_PER_PAGE = 2;
+const POSTS_PER_PAGE = 5;
 
 /**
  * Fetches a paginated list of blog articles from Strapi
@@ -29,7 +29,7 @@ export async function getArticleByDocumentId(
   documentId: string,
 ): Promise<SingleArticleApiResponse | null> {
   try {
-    // Strapi v5 Endpoint: /articles/vds8c5hwvv91jxi78k2tjws7?populate=*
+    // Strapi get article by ID
     const response = await apiClient.get<SingleArticleApiResponse>(
       `/articles/${documentId}?populate=*`,
       {

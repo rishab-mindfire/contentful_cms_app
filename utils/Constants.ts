@@ -11,7 +11,7 @@ export const FALLBACK_DATA: GlobalData = {
     navItems: [],
     logo: {
       id: 0,
-      lable: 'Home',
+      lable: '',
       href: '/',
       isExternal: false,
       image: { id: 0, documentId: '', url: '' },
@@ -19,10 +19,10 @@ export const FALLBACK_DATA: GlobalData = {
   },
   footer: {
     id: 0,
-    text: '© 2026 Company',
+    text: '',
     logo: {
       id: 0,
-      lable: 'Footer Logo',
+      lable: '',
       href: '/',
       isExternal: false,
       image: { id: 0, documentId: '', url: '' },

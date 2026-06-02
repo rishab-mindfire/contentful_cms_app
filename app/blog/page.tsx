@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import { getArticles } from '@/services/blog.service';
 import { getFullUrl } from '@/utils/helperFunctions';
 
@@ -11,87 +10,103 @@ interface Props {
 export default async function BlogPage({ searchParams }: Props) {
   const resolvedParams = await searchParams;
   const currentPage = Number(resolvedParams.page) || 1;
-
   const response = await getArticles(currentPage);
-  const articles = response.data;
-  const { pageCount } = response.meta.pagination;
+  const { data: articles, meta } = response;
+  const { pageCount } = meta.pagination;
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
-        <header className="mb-14 text-center">
-          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
-            Latest Articles
-          </h1>
+    <main className="min-h-screen bg-white py-2 px-6">
+      <div className="max-w-4xl mx-auto">
+        <header className="mb-10">
+          <h3 className="text-3xl font-extrabold text-gray-900 tracking-tight mb-4">Blogs</h3>
+          <div className="w-30 h-1 bg-indigo-600 rounded-full" />
         </header>
 
         {/* Articles Feed */}
-        <div className="space-y-12">
+        <div className="space-y-10">
           {articles.map((article) => {
-            const imageUrl = `${getFullUrl(article.featuredImage.url)}`;
             const formattedDate = new Date(article.createdAt).toLocaleDateString('en-US', {
-              month: 'long',
+              month: 'short',
               day: 'numeric',
               year: 'numeric',
             });
 
             return (
-              <article
-                key={article.id}
-                className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden grid grid-cols-1 md:grid-cols-12 gap-6 p-6 hover:shadow-md transition-shadow duration-300"
-              >
-                <div className="md:col-span-4 relative h-52 md:h-full min-h-200px w-full rounded-xl overflow-hidden bg-gray-100">
-                  <Image
-                    src={imageUrl}
-                    alt={article.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-w-768px) 100vw, 33vw"
-                  />
-                </div>
+              <article key={article.id} className="group">
+                <Link href={`/blog/${article.documentId}`} className="block">
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
+                    {/* Image Container */}
+                    <div className="md:col-span-2 relative aspect-4/3 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-500">
+                      <Image
+                        src={getFullUrl(article.featuredImage.url)}
+                        alt={article.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, 400px"
+                      />
+                    </div>
 
-                <div className="md:col-span-8 flex flex-col justify-between">
-                  <div>
-                    <div className="text-sm text-gray-400 font-medium mb-2">{formattedDate}</div>
+                    {/* Content */}
+                    <div className="md:col-span-3 space-y-4">
+                      <div className="flex items-center gap-3 text-sm font-semibold text-indigo-600 uppercase tracking-wider">
+                        <span>{formattedDate}</span>
+                        <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                      </div>
 
-                    <Link href={`/blog/${article.documentId}`}>
-                      <h2 className="text-2xl font-bold text-gray-900 hover:text-blue-600 transition-colors mb-3">
+                      <h2 className="text-3xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">
                         {article.title}
                       </h2>
-                    </Link>
 
-                    <p className="text-gray-500 font-medium mb-4 italic">"{article.description}"</p>
-                    <div className="border-t border-gray-100 pt-4 mb-4 line-clamp-2 prose prose-sm max-w-none">
-                      {article.content && <BlocksRenderer content={article.content.slice(0, 1)} />}
+                      <p className="text-gray-600 leading-relaxed line-clamp-3">
+                        {article.description}
+                      </p>
+
+                      <div className="pt-2 font-medium text-gray-900 flex items-center group-hover:gap-2 transition-all">
+                        Read more <span>&rarr;</span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               </article>
             );
           })}
         </div>
 
-        {/* Pagination Section */}
+        {/* Pagination */}
         {pageCount > 1 && (
-          <div className="mt-16 flex justify-center items-center space-x-4">
-            <Link
-              href={`/blog?page=${currentPage - 1}`}
-              className={`px-4 py-2 border rounded-lg text-sm font-medium ${currentPage <= 1 ? 'pointer-events-none opacity-40 bg-gray-100' : 'bg-white hover:bg-gray-50'}`}
-            >
-              Previous
-            </Link>
-            <span className="text-sm text-gray-700">
+          <nav className="mt-24 pt-12 border-t border-gray-100 flex justify-between items-center">
+            <PaginationLink page={currentPage - 1} label="Previous" disabled={currentPage <= 1} />
+            <span className="text-sm font-medium text-gray-500">
               Page {currentPage} of {pageCount}
             </span>
-            <Link
-              href={`/blog?page=${currentPage + 1}`}
-              className={`px-4 py-2 border rounded-lg text-sm font-medium ${currentPage >= pageCount ? 'pointer-events-none opacity-40 bg-gray-100' : 'bg-white hover:bg-gray-50'}`}
-            >
-              Next
-            </Link>
-          </div>
+            <PaginationLink
+              page={currentPage + 1}
+              label="Next"
+              disabled={currentPage >= pageCount}
+            />
+          </nav>
         )}
       </div>
     </main>
+  );
+}
+
+// Helper function pagination
+function PaginationLink({
+  page,
+  label,
+  disabled,
+}: {
+  page: number;
+  label: string;
+  disabled: boolean;
+}) {
+  return (
+    <Link
+      href={`/blog?page=${page}`}
+      className={`px-6 py-3 rounded-xl border border-gray-200 font-semibold transition-all ${disabled ? 'opacity-30 cursor-not-allowed' : 'hover:border-indigo-600 hover:text-indigo-600'}`}
+    >
+      {label}
+    </Link>
   );
 }

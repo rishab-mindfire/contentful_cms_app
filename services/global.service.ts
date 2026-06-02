@@ -4,7 +4,10 @@ import { GlobalData } from '@/utils/types';
 export const globalService = {
   getData: async (): Promise<GlobalData | null> => {
     try {
-      const response = await apiClient.get<{ data: GlobalData }>('/globle');
+      //cache data by revalidating
+      const response = await apiClient.get<{ data: GlobalData }>('/globle', {
+        next: { revalidate: 3600 },
+      });
 
       // If response is null return null
       if (!response) return null;

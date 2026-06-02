@@ -13,7 +13,7 @@ export const apiClient = {
           ...(process.env.STRAPI_API_TOKEN
             ? { Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}` }
             : {}),
-          ...options.headers, // Merge user custom headers if they exist
+          ...options.headers,
         },
       });
 

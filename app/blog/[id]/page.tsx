@@ -11,20 +11,10 @@ interface Props {
 
 export default async function BlogPostPage({ params }: Props) {
   const { id } = await params;
-
   const response = await getArticleByDocumentId(id);
   const article = response?.data;
 
-  if (!article) {
-    notFound();
-  }
-
-  // 1. Safe Image Resolution with local fallbacks
-  const imageUrl = getFullUrl(article.featuredImage.url);
-
-  const authorImageUrl = article.author?.image?.url
-    ? `${getFullUrl(article.author.image.url)}`
-    : '/default-avatar.png';
+  if (!article) notFound();
 
   const formattedDate = new Date(article.createdAt).toLocaleDateString('en-US', {
     month: 'long',
@@ -33,55 +23,65 @@ export default async function BlogPostPage({ params }: Props) {
   });
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <article className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden p-6 sm:p-10">
+    <main className="min-h-screen bg-gray-50 py-4 px-6 relative">
+      {/* Navigation */}
+      <div className="sticky top-20 z-5 hidden md:block">
         <Link
           href="/blog"
-          className="text-sm font-medium text-blue-600 hover:underline inline-block mb-6"
+          className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center"
         >
-          ← Back to articles
+          &larr; Back to articles
         </Link>
-
-        <header className="mb-8">
-          <div className="text-sm text-gray-400 font-medium mb-2">{formattedDate}</div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
+      </div>
+      <article className="max-w-4xl mx-auto bg-white p-8 md:p-16 rounded-3xl shadow-sm border border-gray-100">
+        {/* Header */}
+        <header className="mb-10 text-center">
+          <div className="text-sm font-bold text-indigo-600 uppercase tracking-widest mb-4">
+            {formattedDate}
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-6">
             {article.title}
           </h1>
-          {article.description && (
-            <p className="text-xl text-gray-500 italic">"{article.description}"</p>
-          )}
+          <p className="text-xl text-gray-600 italic">"{article.description}"</p>
         </header>
 
-        <div className="relative h-64 sm:h-96 w-full rounded-xl overflow-hidden bg-gray-100 mb-8">
+        {/* Featured Image */}
+        <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl mb-12">
           <Image
-            src={imageUrl}
-            alt={article.title || 'Blog featured image'}
+            src={getFullUrl(article.featuredImage.url)}
+            alt={article.title}
             fill
             className="object-cover"
             priority
           />
         </div>
 
-        <div className="prose max-w-none border-b border-gray-100 pb-8 mb-8">
+        {/* Content - Using prose-lg for professional readability */}
+        <div className="prose prose-lg prose-indigo max-w-none mb-16">
           {article.content && <BlocksRenderer content={article.content} />}
         </div>
 
-        <div className="flex items-center space-x-4">
-          <div className="relative w-12 h-12 rounded-full overflow-hidden bg-gray-100 shrink-0">
+        {/* Author Footer Card */}
+        <div className="bg-white border border-gray-100 p-8 rounded-2xl flex items-center gap-6 shadow-sm">
+          <div className="relative w-20 h-20 rounded-full overflow-hidden shrink-0">
             <Image
-              src={authorImageUrl}
-              alt={article.author?.fullName || 'Unknown User'}
+              src={
+                article.author?.image?.url
+                  ? getFullUrl(article.author.image.url)
+                  : '/default-avatar.png'
+              }
+              alt={article.author?.fullName || 'Author'}
               fill
               className="object-cover"
             />
           </div>
           <div>
-            <span className="block text-base font-semibold text-gray-900">
-              {article.author?.fullName || 'Unknown User'}
-            </span>
-            <span className="block text-sm text-gray-400">
-              {article.author?.bio || 'Staff Contributor'}
-            </span>
+            <h4 className="text-lg font-bold text-gray-900">
+              {article.author?.fullName || 'Staff Writer'}
+            </h4>
+            <p className="text-gray-500">
+              {article.author?.bio || 'Expert contributor at our publication.'}
+            </p>
           </div>
         </div>
       </article>
