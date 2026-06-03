@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import { getArticleByDocumentId } from '@/services/blog.service';
-import { getFullUrl } from '@/utils/helperFunctions';
+import { formattedDate, getFullUrl } from '@/utils/helperFunctions';
+import MarkdownBlog from '@/components/features-blocks/markDown-Blogs';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -15,12 +15,6 @@ export default async function BlogPostPage({ params }: Props) {
   const article = response?.data;
 
   if (!article) notFound();
-
-  const formattedDate = new Date(article.createdAt).toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
 
   return (
     <main className="min-h-screen bg-gray-50 py-4 px-6 relative">
@@ -41,7 +35,7 @@ export default async function BlogPostPage({ params }: Props) {
             dateTime={article?.createdAt}
             className="text-sm font-bold text-indigo-600 uppercase tracking-widest mb-4 block"
           >
-            {formattedDate}
+            {formattedDate(article?.createdAt)}
           </time>
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-6">
             {article.title}
@@ -69,7 +63,7 @@ export default async function BlogPostPage({ params }: Props) {
           aria-label="Article body content"
           className="prose prose-lg prose-indigo max-w-none mb-16"
         >
-          {article.content && <BlocksRenderer content={article.content} />}
+          {article.content && <MarkdownBlog content={article.content} />}
         </section>
 
         {/* Author Footer Card */}
