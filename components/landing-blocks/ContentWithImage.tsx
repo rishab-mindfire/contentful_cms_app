@@ -34,7 +34,6 @@ export default function ContentWithImage({
       <div className="flex-1 w-full relative aspect-4/3 rounded-2xl overflow-hidden shadow-xl bg-gray-100">
         <Image
           src={image?.url ? getFullUrl(image?.url) : '/default.png'}
-          // setting this descriptive context keeps screen-readers uncluttered.
           alt={heading ? `Illustration for ${heading}` : 'Informational graphic'}
           fill
           className="object-cover"
