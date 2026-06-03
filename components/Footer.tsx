@@ -47,7 +47,7 @@ export const Footer = () => {
                     >
                       <Image
                         src={getFullUrl(link?.image.url)}
-                        alt="" // Screen reader context handled elegantly by parent link aria-label
+                        alt=""
                         width={20}
                         height={20}
                         className="w-8 h-8 object-contain"

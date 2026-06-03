@@ -103,7 +103,7 @@ export default function AuthClientPage() {
           </p>
         </div>
 
-        {/* Error Display (Accessible Live Region) */}
+        {/* Error Display  */}
         {error && (
           <div
             role="alert"

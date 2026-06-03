@@ -9,14 +9,14 @@ export default function NotFound() {
   return (
     <main className="flex min-h-[85vh] flex-col items-center justify-center px-6 text-center bg-white dark:bg-gray-900 transition-colors duration-200">
       <div className="space-y-6 max-w-md mx-auto">
-        {/* Visual 404 Element - Hidden from screen readers to prevent redundant reading */}
+        {/* Visual 404 Element  */}
         <div className="flex justify-center select-none" aria-hidden="true">
           <span className="text-9xl font-black tracking-tight text-gray-200 dark:text-gray-800 selection:bg-transparent">
             404
           </span>
         </div>
 
-        {/* Informational Text - Promoted to H1 as the primary page landmark */}
+        {/* Informational Text */}
         <div className="space-y-2">
           <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-3xl">
             Page not found!

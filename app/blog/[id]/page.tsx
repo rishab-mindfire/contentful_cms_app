@@ -24,7 +24,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-gray-50 py-4 px-6 relative">
-      {/* Navigation - Added landmark role & focus handling */}
+      {/* Navigation  */}
       <nav className="sticky top-20 z-10 hidden md:block" aria-label="Back navigation">
         <Link
           href="/blog"
@@ -53,7 +53,7 @@ export default async function BlogPostPage({ params }: Props) {
           )}
         </header>
 
-        {/* Featured Image - Informative hidden label context */}
+        {/* Featured Image */}
         <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl mb-12">
           <Image
             src={article?.featuredImage ? getFullUrl(article?.featuredImage?.url) : '/default.png'}
@@ -64,7 +64,7 @@ export default async function BlogPostPage({ params }: Props) {
           />
         </div>
 
-        {/* Content Section - Explicit reading boundary context */}
+        {/* Content Section */}
         <section
           aria-label="Article body content"
           className="prose prose-lg prose-indigo max-w-none mb-16"
@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: Props) {
           {article.content && <BlocksRenderer content={article.content} />}
         </section>
 
-        {/* Author Footer Card - Swapped to complementary structure */}
+        {/* Author Footer Card */}
         <footer
           aria-label="About the author"
           className="bg-white border border-gray-100 p-8 rounded-2xl flex flex-col sm:flex-row items-center gap-6 shadow-sm"

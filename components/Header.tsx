@@ -96,7 +96,7 @@ export default function Header() {
               aria-hidden="true"
             >
               {isOpen ? (
-                // Clean visual state shift to an 'X' icon when open
+                //'X' icon when open
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
