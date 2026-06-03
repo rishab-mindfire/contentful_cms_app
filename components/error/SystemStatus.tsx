@@ -11,7 +11,7 @@ export default function SystemStatus({ message }: SystemStatusProps) {
       role="alert"
       aria-live="assertive"
     >
-      {/* Optional: Error Icon Indicator to add context */}
+      {/* Error Icon Indicator to add context */}
       <div className="mb-4 text-amber-500" aria-hidden="true">
         <svg className="w-12 h-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path

@@ -65,7 +65,7 @@ export default function Faqs({ Faq }: FAQBlock) {
                 id={panelId}
                 role="region"
                 aria-labelledby={buttonId}
-                hidden={!isOpen} // Helps old assistive tech safely ignore collapsed sections
+                hidden={!isOpen}
                 className={`grid transition-all duration-200 ease-in-out ${
                   isOpen
                     ? 'grid-rows-[1fr] opacity-100 border-t border-gray-100'

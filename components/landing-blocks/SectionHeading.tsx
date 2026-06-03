@@ -20,7 +20,7 @@ export default function SectionHeading({
         {heading}
       </HeadingTag>
 
-      {/* Decorative Accent Bar - Hidden from screen readers to reduce structural noise */}
+      {/* Decorative Accent Bar */}
       <div className="w-24 h-1.5 bg-indigo-600 rounded-full mb-6" aria-hidden="true" />
 
       {/* Subheading */}

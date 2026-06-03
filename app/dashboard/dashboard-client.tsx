@@ -42,7 +42,7 @@ export default function DashboardClientPage({ session }: { session: SessionType 
               </div>
             </div>
 
-            {/* Sign Out Button - Upgraded click behaviors and focus indicators */}
+            {/* Sign Out Button */}
             <button
               type="button"
               onClick={handleSignOut}

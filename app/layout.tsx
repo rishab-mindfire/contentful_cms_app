@@ -30,6 +30,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  //innitial checks for db connections
   let session = null;
   let isDbDown = false;
   let globalData = null;

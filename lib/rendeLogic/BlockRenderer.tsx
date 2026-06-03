@@ -22,6 +22,7 @@ const componentMap: BlockComponentMap = {
 } as BlockComponentMap;
 
 interface Props {
+  isPriority?: boolean;
   block: PageBlock;
 }
 
