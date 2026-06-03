@@ -33,8 +33,7 @@ export default function ContentWithImage({
       {/* Image Side */}
       <div className="flex-1 w-full relative aspect-4/3 rounded-2xl overflow-hidden shadow-xl bg-gray-100">
         <Image
-          src={getFullUrl(image?.url)}
-          // If the image is purely editorial/presentational alongside the identical headline,
+          src={image?.url ? getFullUrl(image?.url) : '/default.png'}
           // setting this descriptive context keeps screen-readers uncluttered.
           alt={heading ? `Illustration for ${heading}` : 'Informational graphic'}
           fill

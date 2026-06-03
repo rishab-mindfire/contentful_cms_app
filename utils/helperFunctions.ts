@@ -1,3 +1,4 @@
+// date time formator
 export async function formattedDate(date: string) {
   return new Date(date).toLocaleDateString('en-US', {
     month: 'long',

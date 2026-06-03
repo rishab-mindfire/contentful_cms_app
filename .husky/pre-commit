@@ -1,1 +1,6 @@
+#  lint-staged to handle linting/formatting
 npx lint-staged
+
+# Run the ENTIRE test suite.
+echo "Running all tests..."
+npx vitest run

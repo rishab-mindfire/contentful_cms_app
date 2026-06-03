@@ -12,7 +12,7 @@ export default function PersonCard({ personName, personJob, aboutPerson, image }
         {/* Avatar Image Wrapper */}
         <div className="relative w-48 h-48 md:w-64 md:h-64 overflow-hidden rounded-full border-4 border-gray-50 shadow-md shrink-0 bg-gray-50">
           <Image
-            src={getFullUrl(image?.url)}
+            src={image?.url ? getFullUrl(image?.url) : '/default.png'}
             alt={personName ? `${personName} profile avatar` : 'Team member snapshot'}
             fill
             className="object-cover"

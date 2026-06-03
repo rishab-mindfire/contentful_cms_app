@@ -8,8 +8,8 @@ export default async function LandingPage() {
   const blocks = response?.data?.blocks || [];
   return (
     <main className="min-h-screen">
-      {blocks.map((block: PageBlock) => (
-        <BlockRenderer key={block.__component} block={block} />
+      {blocks.map((block: PageBlock, index) => (
+        <BlockRenderer key={`${block.__component}-${block.id || 'no-id'}-${index}`} block={block} />
       ))}
     </main>
   );
