@@ -10,6 +10,7 @@ interface Props {
 export default async function BlogPage({ searchParams }: Props) {
   const resolvedParams = await searchParams;
   const currentPage = Number(resolvedParams.page) || 1;
+  //ISR Api call
   const response = await getArticles(currentPage);
   const { data: articles, meta } = response;
   const { pageCount } = meta.pagination;

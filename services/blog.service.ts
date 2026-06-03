@@ -5,31 +5,30 @@ const REVALIDATE_TIME = 10;
 const POSTS_PER_PAGE = 5;
 
 /**
- * Fetches a paginated list of blog articles from Strapi
+ * Fetches a paginated list of blog articles
  */
-export async function getArticles(page: number = 1): Promise<ArticlesApiResponse> {
+export async function getArticles(
+  page: number = 1,
+  pageSize: number = POSTS_PER_PAGE,
+): Promise<ArticlesApiResponse> {
   const data = await apiClient.get<ArticlesApiResponse>(
-    `/articles?populate=*&pagination[page]=${page}&pagination[pageSize]=${POSTS_PER_PAGE}`,
+    `/articles?populate=*&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
     {
       next: { revalidate: REVALIDATE_TIME },
     },
   );
 
-  if (!data) {
-    throw new Error('Failed to fetch articles from Strapi CMS server');
-  }
-
+  if (!data) throw new Error('Failed to fetch articles');
   return data;
 }
 
 /**
- * Fetches a single article by its unique slug string
+ * Fetches a single article by its unique documentId
  */
 export async function getArticleByDocumentId(
   documentId: string,
 ): Promise<SingleArticleApiResponse | null> {
   try {
-    // Strapi get article by ID
     const response = await apiClient.get<SingleArticleApiResponse>(
       `/articles/${documentId}?populate=*`,
       {
@@ -37,14 +36,9 @@ export async function getArticleByDocumentId(
       },
     );
 
-    // If no data returned, return null so the page can handle a 404
-    if (!response || !response.data) {
-      return null;
-    }
-
-    return response;
+    return response?.data ? response : null;
   } catch (error) {
-    console.error(`Failed to fetch article with documentId: ${documentId}`, error);
-    throw new Error('Strapi CMS server error during document fetch');
+    console.error(`Error fetching article: ${documentId}`, error);
+    return null;
   }
 }

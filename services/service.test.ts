@@ -48,7 +48,7 @@ describe('globalService Resiliency', () => {
     // Simulate API returning null or undefined
     getMock.mockResolvedValue(null);
 
-    await expect(getArticles(1)).rejects.toThrow('Failed to fetch articles from Strapi CMS server');
+    await expect(getArticles(1)).rejects.toThrow('Failed to fetch articles');
   });
 
   it('should throw an error when the API call fails (network error)', async () => {

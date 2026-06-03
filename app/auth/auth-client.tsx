@@ -1,14 +1,15 @@
 'use client';
-
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SocialAuth } from '@/components/ui/socialAuth';
 import { signIn, signInSocial, signUp } from '../../lib/actions/auth-action';
 import { Loader } from '@/components/ui/loader';
-import { ResultRes } from '@/utils/types';
+import { LoginType, ResultRes } from '@/utils/types';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useGlobal } from '../GlobalContext';
 import { getFullUrl } from '@/utils/helperFunctions';
+import { globalService } from '@/services/global.service';
+import { useRouter } from 'next/navigation';
+import { handleApiError } from '@/utils/errorHandler';
 
 export default function AuthClientPage() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -17,7 +18,8 @@ export default function AuthClientPage() {
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-
+  const [loginData, setLoginData] = useState<LoginType | null>(null);
+  const router = useRouter();
   //social login
   const handleSocialAuth = async (provider: 'google' | 'github') => {
     setIsLoading(true);
@@ -51,6 +53,8 @@ export default function AuthClientPage() {
         const result: ResultRes = await signUp(email, password, name);
         if (!result || result.error.length > 0) {
           setError(result.error);
+        } else {
+          router.push('/dashboard');
         }
       }
     } catch (err) {
@@ -60,17 +64,19 @@ export default function AuthClientPage() {
     }
   };
 
-  // logo data from the Context
-  const { globalData, isDbDown } = useGlobal();
-  const loginData = globalData.login;
-
-  if (isDbDown) {
-    return (
-      <div className="p-4 text-red-600 text-center">
-        Configuration currently unavailable. Please check your connection.
-      </div>
-    );
-  }
+  // login data
+  useEffect(() => {
+    globalService
+      .getData()
+      .then((data) => {
+        if (data) {
+          setLoginData(data.login);
+        }
+      })
+      .catch((err) =>
+        handleApiError('GlobalService.fetch', err, 'Failed to fetch global site data.'),
+      );
+  }, []);
 
   return (
     <main className="min-h-screen g-linear-to-b from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -84,7 +90,9 @@ export default function AuthClientPage() {
           >
             <div className="relative w-24 h-24">
               <Image
-                src={getFullUrl(loginData?.logoImage.url)}
+                src={
+                  loginData?.logoImage.url ? getFullUrl(loginData?.logoImage.url) : '/default.png'
+                }
                 alt={loginData?.mainText || 'Company Logo'}
                 fill
                 priority
