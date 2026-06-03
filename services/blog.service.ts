@@ -1,5 +1,6 @@
 import { ArticlesApiResponse, SingleArticleApiResponse } from '@/utils/types';
 import { apiClient } from './api-client';
+import { handleApiError } from '@/utils/errorHandler';
 
 const REVALIDATE_TIME = 10;
 const POSTS_PER_PAGE = 5;
@@ -38,7 +39,7 @@ export async function getArticleByDocumentId(
 
     return response?.data ? response : null;
   } catch (error) {
-    console.error(`Error fetching article: ${documentId}`, error);
+    handleApiError(`Error fetching article: ${documentId}`, error);
     return null;
   }
 }

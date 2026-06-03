@@ -5,6 +5,7 @@ import { getFullUrl } from '@/utils/helperFunctions';
 import { FooterType } from '@/utils/types';
 import { useEffect, useState } from 'react';
 import { globalService } from '@/services/global.service';
+import { handleApiError } from '@/utils/errorHandler';
 
 export const Footer = () => {
   const [footerData, setFooterData] = useState<FooterType | null>(null);
@@ -17,7 +18,7 @@ export const Footer = () => {
           setFooterData(data.footer);
         }
       })
-      .catch((err) => console.error('Could not fetch global data', err));
+      .catch((err) => handleApiError('Could not fetch global data', err));
   }, []);
 
   if (!footerData) return null;

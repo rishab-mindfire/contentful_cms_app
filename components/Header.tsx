@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { getFullUrl } from '@/utils/helperFunctions';
 import { globalService } from '@/services/global.service';
 import { HeaderType } from '@/utils/types';
+import { handleApiError } from '@/utils/errorHandler';
 
 export default function Header() {
   const [headerData, setHeaderData] = useState<HeaderType | null>(null);
@@ -22,7 +23,7 @@ export default function Header() {
           setHeaderData(data.header);
         }
       })
-      .catch((err) => console.error('Could not fetch global data', err));
+      .catch((err) => handleApiError('Could not fetch global data', err));
   }, []);
 
   // Accessible IDs for mobile disclosures

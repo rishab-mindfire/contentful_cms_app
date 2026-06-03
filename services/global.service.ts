@@ -1,3 +1,4 @@
+import { handleApiError } from '@/utils/errorHandler';
 import { apiClient } from './api-client';
 import { GlobalData } from '@/utils/types';
 
@@ -12,7 +13,7 @@ export const globalService = {
       return response.data;
     } catch (error) {
       // Catch network errors
-      console.error('Service Error:', error);
+      handleApiError('Service Error:', error);
       return null;
     }
   },

@@ -1,3 +1,4 @@
+import { handleApiError } from '@/utils/errorHandler';
 import { apiClient } from './api-client';
 import { PricingResponse } from '@/utils/types';
 
@@ -8,7 +9,7 @@ export const priceService = {
       // returns data
       return response;
     } catch (error) {
-      console.error('Service Error:', error);
+      handleApiError('Service Error:', error);
       return null;
     }
   },
