@@ -61,7 +61,7 @@ export default async function RootLayout({
         ) : (
           <GlobalProvider data={globalData} session={session}>
             <a href="#main-content" className="sr-only focus:not-sr-only">
-              Skip to main content
+              Skip to main
             </a>
             <Header />
             <main id="main-content" className="min-h-screen">

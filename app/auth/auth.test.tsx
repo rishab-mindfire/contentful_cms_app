@@ -70,7 +70,7 @@ describe('AuthClientPage Component', () => {
 
     render(<AuthClientPage />);
 
-    expect(screen.getByText(/Configuration currently unavailable/i)).toBeInTheDocument();
+    expect(screen.getByText(/Configuration {2}unavailable/i)).toBeInTheDocument();
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 
