@@ -1,7 +1,6 @@
-// middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { auth } from '@/lib/auth'; // Import your auth instance
+import { auth } from '@/lib/auth';
 
 export async function middleware(request: NextRequest) {
   // Define protected routes
@@ -9,7 +8,6 @@ export async function middleware(request: NextRequest) {
 
   if (isDashboard) {
     // Check session using the auth API
-    // We pass the request headers to better-auth
     const session = await auth.api.getSession({
       headers: request.headers,
     });
