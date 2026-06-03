@@ -1,1 +1,16 @@
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
+
+# 1. Run lint-staged to handle linting/formatting fixes
 npx lint-staged
+
+# 2. Get only staged JS/TS files
+STAGED_FILES=$(git diff --staged --name-only --diff-filter=ACMR | grep -E '\.(js|jsx|ts|tsx)$' || true)
+
+# 3. Only run Vitest if there are relevant files staged
+if [ -n "$STAGED_FILES" ]; then
+  echo "🧪 Running related tests for modified files..."
+  npx vitest run --related $STAGED_FILES --passWithNoTests
+else
+  echo "⏩ No changed JS/TS files found. Skipping tests."
+fi
