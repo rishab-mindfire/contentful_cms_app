@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getArticles } from '@/services/blog.service';
-import { getFullUrl } from '@/utils/helperFunctions';
+import { formattedDate, getFullUrl } from '@/utils/helperFunctions';
 
 interface Props {
   searchParams: Promise<{ page?: string }>;
@@ -25,17 +25,10 @@ export default async function BlogPage({ searchParams }: Props) {
         {/* Articles Feed List Container */}
         <div className="space-y-16" role="feed" aria-label="Blog posts feed">
           {articles.map((article, index) => {
-            const formattedDate = new Date(article.createdAt).toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric',
-            });
-
             return (
               <article
                 key={article.id}
                 className="group"
-                // Inform screen reader positions if infinite/paginated list tracking applies
                 aria-posinset={index + 1}
                 aria-setsize={articles.length}
               >
@@ -47,8 +40,11 @@ export default async function BlogPage({ searchParams }: Props) {
                     {/* Image Container */}
                     <div className="md:col-span-2 relative aspect-4/3 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-500">
                       <Image
-                        src={getFullUrl(article?.featuredImage?.url)}
-                        // Decorative fallback since title text is immediately read next door
+                        src={
+                          article?.featuredImage
+                            ? getFullUrl(article?.featuredImage?.url)
+                            : '/default.png'
+                        }
                         alt=""
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -59,11 +55,11 @@ export default async function BlogPage({ searchParams }: Props) {
                     {/* Content */}
                     <div className="md:col-span-3 space-y-4">
                       <div className="flex items-center gap-3 text-sm font-semibold text-indigo-600 uppercase tracking-wider">
-                        <time dateTime={article.createdAt}>{formattedDate}</time>
+                        <time dateTime={article.createdAt}>{formattedDate(article.createdAt)}</time>
                         <span className="w-1 h-1 bg-gray-300 rounded-full" aria-hidden="true" />
                       </div>
 
-                      <h2 className="text-3xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">
+                      <h2 className="text-3xl font-bold text-gray-900 group-hover:text-indigo-900 transition-colors">
                         {article.title}
                       </h2>
 

@@ -56,7 +56,7 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Featured Image - Informative hidden label context */}
         <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl mb-12">
           <Image
-            src={getFullUrl(article?.featuredImage?.url)}
+            src={article?.featuredImage ? getFullUrl(article?.featuredImage?.url) : '/default.png'}
             alt={article?.title ? `Cover image for ${article.title}` : 'Article cover presentation'}
             fill
             className="object-cover"

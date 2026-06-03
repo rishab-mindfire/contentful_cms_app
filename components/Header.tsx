@@ -40,13 +40,13 @@ export default function Header() {
             <div className="relative w-8 h-8">
               <Image
                 src={getFullUrl(headerData?.logo?.image?.url)}
-                alt="" // Handled cleanly by parent link aria-label to avoid text duplication
+                alt=""
                 fill
                 className="object-contain"
               />
             </div>
             <span className="text-lg font-bold text-gray-900 hidden sm:block">
-              {headerData.logo.lable} {/* Kept lable typo */}
+              {headerData.logo.lable}
             </span>
           </Link>
 
@@ -64,7 +64,7 @@ export default function Header() {
                       current ? 'text-white bg-indigo-700' : 'text-gray-600 hover:text-gray-900'
                     }`}
                   >
-                    {item.lable} {/* Kept lable typo */}
+                    {item.lable}
                   </Link>
                 );
               })}
@@ -135,7 +135,7 @@ export default function Header() {
                   current ? 'text-white bg-indigo-700' : 'text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                {item.lable} {/* Kept lable typo */}
+                {item.lable}
               </Link>
             );
           })}
