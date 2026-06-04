@@ -12,6 +12,7 @@ interface Props {
 
 export const revalidate = 10;
 export async function generateStaticParams() {
+  // generate static page during build up to 50 dynamic blog pages
   const response = await getArticles(1, 50);
   const ids = response.data.map((article) => ({
     id: article.documentId,
@@ -102,7 +103,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
           <div className="text-center sm:text-left">
             <h2 className="text-lg font-bold text-gray-900">
-              By {article.author?.fullName || 'Staff Writer'}
+              By {article.author?.fullName || 'Anonymous'}
             </h2>
             <p className="text-gray-500 text-sm mt-1">
               {article.author?.bio || 'Expert contributor at our publication.'}

@@ -39,7 +39,7 @@ describe('globalService Resiliency', () => {
 
     expect(getMock).toHaveBeenCalledWith(
       '/articles?populate=*&pagination[page]=1&pagination[pageSize]=5',
-      { next: { revalidate: 10 } },
+      { next: { revalidate: 60 } },
     );
     expect(result).toEqual(mockResponseArticle);
   });

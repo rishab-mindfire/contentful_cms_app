@@ -47,7 +47,7 @@ export default function DashboardClientPage({ session }: { session: SessionType 
             <button
               type="button"
               onClick={handleSignOut}
-              className="w-full md:w-auto px-6 py-3 font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-all duration-200 outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+              className="w-full md:w-auto px-6 py-1 font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-all duration-200 outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
             >
               Sign Out
             </button>
