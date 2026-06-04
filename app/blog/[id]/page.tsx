@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { getArticleByDocumentId, getArticles } from '@/services/blog.service';
 import { formattedDate, getFullUrl } from '@/utils/helperFunctions';
 import MarkdownBlog from '@/components/features-blocks/markDown-Blogs';
+import { Article } from '@/utils/types';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -14,16 +15,15 @@ export const revalidate = 10;
 export async function generateStaticParams() {
   try {
     const response = await getArticles(1, 50);
-    // Safety check: ensure response and data exist
+    //  ensure response and data exist
     if (!response?.data) return [];
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return response.data.map((article: any) => ({
+    return response.data.map((article: Article) => ({
       id: article.documentId,
     }));
   } catch (error) {
     console.error('Failed to fetch articles for static params, falling back to dynamic:', error);
-    return []; // Return empty array so build doesn't crash
+    return [];
   }
 }
 
