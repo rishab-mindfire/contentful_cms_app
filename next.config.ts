@@ -21,6 +21,13 @@ const nextConfig = {
         port: strapiUrl.port || '',
         pathname: '/uploads/**',
       },
+      //strapi url
+      {
+        protocol: 'https',
+        hostname: 'strapi-backend-pm77.onrender.com',
+        port: '',
+        pathname: '/uploads/**',
+      },
       // GitHub Avatars
       {
         protocol: 'https',
