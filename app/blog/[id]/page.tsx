@@ -12,6 +12,7 @@ interface Props {
 
 export const revalidate = 10;
 export async function generateStaticParams() {
+  // generate static page during build up to 50 dynamic blog pages
   const response = await getArticles(1, 50);
   const ids = response.data.map((article) => ({
     id: article.documentId,
