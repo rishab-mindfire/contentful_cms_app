@@ -38,6 +38,7 @@ export const mockArticle = {
   },
 };
 
+// mock response for article
 export const mockResponseArticle = {
   data: [{ id: 1, attributes: { title: 'Test Article' } }],
   meta: { pagination: { page: 1, pageSize: 5, pageCount: 1, total: 1 } },
