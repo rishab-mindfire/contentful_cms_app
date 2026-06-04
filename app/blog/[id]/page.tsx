@@ -75,6 +75,7 @@ export default async function BlogPostPage({ params }: Props) {
             fill
             className="object-cover"
             priority
+            unoptimized={process.env.NODE_ENV === 'production'}
           />
         </div>
 
@@ -105,6 +106,7 @@ export default async function BlogPostPage({ params }: Props) {
               }
               fill
               className="object-cover"
+              unoptimized={process.env.NODE_ENV === 'production'}
             />
           </div>
           <div className="text-center sm:text-left">
