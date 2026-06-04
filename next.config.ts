@@ -6,14 +6,6 @@ const nextConfig = {
   images: {
     unoptimized: process.env.NODE_ENV === 'development',
     remotePatterns: [
-      {
-        protocol: strapiUrl.protocol.replace(':', '') as 'http' | 'https',
-        hostname: strapiUrl.hostname,
-        port: strapiUrl.port || '',
-        pathname: '/uploads/**',
-      },
-      // allow backend strapi
-      {
       // 1. Localhost patterns
       {
         protocol: 'http',
