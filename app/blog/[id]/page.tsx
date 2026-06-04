@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { getArticleByDocumentId, getArticles } from '@/services/blog.service';
 import { formattedDate, getFullUrl } from '@/utils/helperFunctions';
 import MarkdownBlog from '@/components/features-blocks/markDown-Blogs';
+import { Article } from '@/utils/types';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -12,13 +13,18 @@ interface Props {
 
 export const revalidate = 10;
 export async function generateStaticParams() {
-  // generate static page during build up to 50 dynamic blog pages
-  const response = await getArticles(1, 50);
-  const ids = response.data.map((article) => ({
-    id: article.documentId,
-  }));
+  try {
+    const response = await getArticles(1, 50);
+    //  ensure response and data exist
+    if (!response?.data) return [];
 
-  return ids;
+    return response.data.map((article: Article) => ({
+      id: article.documentId,
+    }));
+  } catch (error) {
+    console.error('Failed to fetch articles for static params, falling back to dynamic:', error);
+    return [];
+  }
 }
 
 export const dynamicParams = true;
