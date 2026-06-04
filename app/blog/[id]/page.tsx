@@ -2,10 +2,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getArticleByDocumentId, getArticles } from '@/services/blog.service';
+import { getArticleByDocumentId } from '@/services/blog.service';
 import { formattedDate, getFullUrl } from '@/utils/helperFunctions';
 import MarkdownBlog from '@/components/features-blocks/markDown-Blogs';
-import { Article } from '@/utils/types';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -13,18 +12,19 @@ interface Props {
 
 export const revalidate = 10;
 export async function generateStaticParams() {
-  try {
-    const response = await getArticles(1, 50);
-    //  ensure response and data exist
-    if (!response?.data) return [];
+  // try {
+  //   const response = await getArticles(1, 50);
+  //   //  ensure response and data exist
+  //   if (!response?.data) return [];
 
-    return response.data.map((article: Article) => ({
-      id: article.documentId,
-    }));
-  } catch (error) {
-    console.error('Failed to fetch articles for static params, falling back to dynamic:', error);
-    return [];
-  }
+  //   return response.data.map((article: Article) => ({
+  //     id: article.documentId,
+  //   }));
+  // } catch (error) {
+  //   console.error('Failed to fetch articles for static params, falling back to dynamic:', error);
+  //   return [];
+  // }
+  return [];
 }
 
 export const dynamicParams = true;
@@ -75,6 +75,7 @@ export default async function BlogPostPage({ params }: Props) {
             fill
             className="object-cover"
             priority
+            unoptimized={process.env.NODE_ENV === 'production'}
           />
         </div>
 
