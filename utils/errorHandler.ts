@@ -1,11 +1,21 @@
-import * as Sentry from '@sentry/nextjs';
+export const handleApiError = (
+  context: string,
+  error: unknown,
+  userMessage?: string,
+  level: 'error' | 'warn' = 'error',
+) => {
+  const err = error instanceof Error ? error : new Error(String(error));
 
-export const handleApiError = (context: string, error: unknown, userMessage?: string) => {
-  //  Log to Sentry
-  Sentry.captureException(error, {
-    tags: { context },
-    extra: { userMessage },
-  });
+  const errorMessage = `[${context}] - ${userMessage || 'An error occurred'}: ${err.message}`;
 
-  console.error(`[${context}] - ${userMessage} Error:`, error);
+  // Log based on the requested severity level
+  switch (level) {
+    case 'warn':
+      console.warn(errorMessage, err);
+      break;
+    case 'error':
+    default:
+      console.error(errorMessage, err);
+      break;
+  }
 };

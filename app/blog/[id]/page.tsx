@@ -74,7 +74,7 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Content Section */}
         <section
           aria-label="Article body content"
-          className="prose prose-lg prose-indigo max-w-none mb-16"
+          className="prose prose-lg prose-indigo max-w-none mb-6"
         >
           {article.content && <MarkdownBlog content={article.content} />}
         </section>

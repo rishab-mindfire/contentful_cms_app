@@ -59,7 +59,7 @@ export default function Header() {
               return (
                 <Link
                   key={item.id}
-                  href={item.href}
+                  href={item.href || ''}
                   aria-current={current ? 'page' : undefined}
                   className={`px-3 py-1 rounded-md text-sm font-medium transition-all outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600 ${
                     current ? 'text-white bg-indigo-700' : 'text-gray-600 hover:text-gray-900'
