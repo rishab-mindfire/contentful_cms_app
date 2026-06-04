@@ -1,13 +1,26 @@
+// ISR component
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getArticleByDocumentId } from '@/services/blog.service';
+import { getArticleByDocumentId, getArticles } from '@/services/blog.service';
 import { formattedDate, getFullUrl } from '@/utils/helperFunctions';
 import MarkdownBlog from '@/components/features-blocks/markDown-Blogs';
 
 interface Props {
   params: Promise<{ id: string }>;
 }
+
+export const revalidate = 10;
+export async function generateStaticParams() {
+  const response = await getArticles(1, 50);
+  const ids = response.data.map((article) => ({
+    id: article.documentId,
+  }));
+
+  return ids;
+}
+
+export const dynamicParams = true;
 
 export default async function BlogPostPage({ params }: Props) {
   const { id } = await params;

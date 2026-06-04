@@ -1,3 +1,4 @@
+// CSR component
 'use client';
 import { signOut } from '@/lib/actions/auth-action';
 import { SessionType } from '@/utils/types';

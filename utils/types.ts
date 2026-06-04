@@ -88,7 +88,7 @@ export interface FooterType {
 }
 
 //login type
-interface LoginType {
+export interface LoginType {
   id: number;
   mainText: string;
   secondaryText: string;

@@ -1,44 +1,32 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import React, { ComponentProps, ReactNode } from 'react';
-import { useGlobal } from '../GlobalContext';
-import { signIn, signInSocial } from '../../lib/actions/auth-action';
 import AuthClientPage from './auth-client';
-import { mockGlobalContextValues } from '@/utils/mocks/mocks';
+import { signIn, signInSocial, signUp } from '../../lib/actions/auth-action';
 
-// Module Mocks & Sub-component Stubs
-vi.mock('../GlobalContext', () => ({
-  useGlobal: vi.fn(),
+// Mock Next.js Navigation
+const mockPush = vi.fn();
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
 }));
 
+// Mock Auth Server Actions
 vi.mock('../../lib/actions/auth-action', () => ({
   signIn: vi.fn(),
   signInSocial: vi.fn(),
   signUp: vi.fn(),
 }));
 
-vi.mock('@/utils/helperFunctions', () => ({
-  getFullUrl: (url: string): string => `https://strapi-cdn.com${url}`,
+// Mock Global Context Hook
+vi.mock('../GlobalContext', () => ({
+  useGlobal: vi.fn(),
 }));
 
-vi.mock('next/image', () => ({
-  default: (props: ComponentProps<'img'>) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img src={props.src} alt={props.alt} data-testid="mock-image" />
-  ),
-}));
-
-vi.mock('next/link', () => ({
-  default: ({ children, href }: { children: ReactNode; href: string }) => (
-    <a href={href} data-testid="mock-link">
-      {children}
-    </a>
-  ),
-}));
-
+// Mock child components to isolate page logic
 vi.mock('@/components/ui/loader', () => ({
-  Loader: () => <span data-testid="mock-loader">Loading...</span>,
+  Loader: () => <span data-testid="loader">Loading...</span>,
 }));
 
 vi.mock('@/components/ui/socialAuth', () => ({
@@ -46,113 +34,105 @@ vi.mock('@/components/ui/socialAuth', () => ({
     handleSocialAuth,
     isLoading,
   }: {
-    handleSocialAuth: (provider: 'google' | 'github') => Promise<void>;
+    handleSocialAuth: (p: 'google' | 'github') => void;
     isLoading: boolean;
   }) => (
-    <div data-testid="social-auth">
-      <button disabled={isLoading} onClick={() => handleSocialAuth('google')}>
-        Google Login
-      </button>
-    </div>
+    <button
+      disabled={isLoading}
+      onClick={() => handleSocialAuth('google')}
+      data-testid="social-auth-btn"
+    >
+      Google Login
+    </button>
   ),
 }));
 
-// auth compnent tests
-describe('AuthClientPage Component', () => {
+describe('AuthClientPage Component (Vitest)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
-  it('renders standard fallback notice layout if the database reports offline status', () => {
-    vi.mocked(useGlobal).mockReturnValue({
-      ...mockGlobalContextValues,
-      isDbDown: true,
-    });
 
+  it('renders the sign-in form by default with contextual fields', () => {
     render(<AuthClientPage />);
 
-    expect(screen.getByText(/Configuration currently unavailable/i)).toBeInTheDocument();
-    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Sign In');
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+
+    // Name field should not present during basic Sign-In
+    expect(screen.queryByLabelText(/name/i)).not.toBeInTheDocument();
   });
 
-  it('renders initial Sign In form layout alongside localized labels from layout context', () => {
-    vi.mocked(useGlobal).mockReturnValue(mockGlobalContextValues);
-
-    render(<AuthClientPage />);
-
-    // Assert localized labels are read properly from context mock
-    expect(screen.getByText('My CMS Platform')).toBeInTheDocument();
-    expect(screen.getByText('Email Address')).toBeInTheDocument();
-    expect(screen.getByText('Password Secure')).toBeInTheDocument();
-
-    // Name input fields must remain hidden during pure sign-in flows
-    expect(screen.queryByText('Full Name')).not.toBeInTheDocument();
-  });
-
-  it('toggles contextual fields cleanly when changing view state to Sign Up', async () => {
+  it('switches seamlessly to sign-up view when requested', async () => {
     const user = userEvent.setup();
-    vi.mocked(useGlobal).mockReturnValue(mockGlobalContextValues);
-
     render(<AuthClientPage />);
 
-    const switchModeButton = screen.getByRole('button', {
-      name: /Don't have an account\? Sign up/i,
-    });
-    await user.click(switchModeButton);
+    const toggleBtn = screen.getByRole('button', { name: /don't have an account\? sign up/i });
+    await user.click(toggleBtn);
 
-    // Form transforms to register view
-    expect(screen.getByText('Full Name')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Create Account');
+    expect(screen.getByLabelText(/full name/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /already have an account\? sign in/i }),
+    ).toBeInTheDocument();
   });
 
-  it('triggers server auth actions on submission with client context credentials', async () => {
+  it('submits credentials through the signIn server action successfully', async () => {
     const user = userEvent.setup();
-    vi.mocked(useGlobal).mockReturnValue(mockGlobalContextValues);
     vi.mocked(signIn).mockResolvedValue({ success: true, error: '' });
 
     render(<AuthClientPage />);
 
-    // Capture standard inputs
-    const emailInput = screen.getByPlaceholderText('Enter your email');
-    const passwordInput = screen.getByPlaceholderText('Enter your password');
-    const submitBtn = screen.getByRole('button', { name: 'Sign In' });
+    await user.type(screen.getByLabelText(/email/i), 'user@example.com');
+    await user.type(screen.getByLabelText(/password/i), 'securePassword123');
 
-    await user.type(emailInput, 'testuser@platform.com');
-    await user.type(passwordInput, 'secretPass123');
-    await user.click(submitBtn);
+    await user.click(screen.getByRole('button', { name: 'Sign In' }));
 
-    expect(signIn).toHaveBeenCalledWith('testuser@platform.com', 'secretPass123');
+    expect(signIn).toHaveBeenCalledWith('user@example.com', 'securePassword123');
   });
 
-  it('toggles contextual fields cleanly when changing view state to Sign Up', async () => {
+  it('triggers signUp action and redirects on valid registration', async () => {
     const user = userEvent.setup();
-    vi.mocked(useGlobal).mockReturnValue(mockGlobalContextValues);
+    vi.mocked(signUp).mockResolvedValue({ success: true, error: '' });
 
     render(<AuthClientPage />);
 
-    //  Initially, it says "Sign In". Find and click the toggle button.
-    // The toggle button text in your code is: "Don't have an account? Sign up"
-    const switchModeButton = screen.getByRole('button', {
-      name: /Don't have an account\? Sign up/i,
+    // Switch to Sign Up
+    await user.click(screen.getByRole('button', { name: /sign up/i }));
+
+    // Populate data
+    await user.type(screen.getByLabelText(/full name/i), 'Alex Doe');
+    await user.type(screen.getByLabelText(/email/i), 'alex@example.com');
+    await user.type(screen.getByLabelText(/password/i), 'superPassword');
+
+    await user.click(screen.getByRole('button', { name: 'Create Account' }));
+
+    await waitFor(() => {
+      expect(signUp).toHaveBeenCalledWith('alex@example.com', 'superPassword', 'Alex Doe');
+      expect(mockPush).toHaveBeenCalledWith('/dashboard');
     });
-    await user.click(switchModeButton);
-
-    // Now that state has changed, the H1 updates to 'Create Account'
-    const signUpHeading = screen.getByRole('heading', { level: 1, name: 'Create Account' });
-    expect(signUpHeading).toBeInTheDocument();
-
-    // The submit button text should also now read 'Create Account'
-    const submitButton = screen.getByRole('button', { name: 'Create Account' });
-    expect(submitButton).toBeInTheDocument();
   });
 
-  it('executes alternative dynamic social integrations via button interaction handlers', async () => {
+  it('renders a warning fallback state if backend explicitly sets failure hooks', async () => {
     const user = userEvent.setup();
-    vi.mocked(useGlobal).mockReturnValue(mockGlobalContextValues);
-    vi.mocked(signInSocial).mockResolvedValue(undefined);
+    vi.mocked(signIn).mockResolvedValue({ success: false, error: 'Invalid password provided.' });
 
     render(<AuthClientPage />);
 
-    const providerTriggerButton = screen.getByRole('button', { name: 'Google Login' });
-    await user.click(providerTriggerButton);
+    await user.type(screen.getByLabelText(/email/i), 'wrong@example.com');
+    await user.type(screen.getByLabelText(/password/i), 'wrongpass');
+    await user.click(screen.getByRole('button', { name: 'Sign In' }));
+
+    const errorAlert = await screen.findByRole('alert');
+    expect(errorAlert).toHaveTextContent('Invalid password provided.');
+  });
+
+  it('triggers the signInSocial runtime method when social links are selected', async () => {
+    const user = userEvent.setup();
+    render(<AuthClientPage />);
+
+    const socialBtn = screen.getByTestId('social-auth-btn');
+    await user.click(socialBtn);
 
     expect(signInSocial).toHaveBeenCalledWith('google');
   });

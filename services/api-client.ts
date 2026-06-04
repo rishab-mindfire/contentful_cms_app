@@ -1,3 +1,5 @@
+import { handleApiError } from '@/utils/errorHandler';
+
 // main api interceptor for Strapi API calls
 export const apiClient = {
   get: async <T>(path: string, options: RequestInit = {}): Promise<T | null> => {
@@ -20,7 +22,7 @@ export const apiClient = {
       if (!res.ok) return null;
       return await res.json();
     } catch (error) {
-      console.error('API Connection Failed:', error);
+      handleApiError('API Connection Failed:', error);
       return null;
     }
   },

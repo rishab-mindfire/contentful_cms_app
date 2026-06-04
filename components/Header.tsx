@@ -1,28 +1,30 @@
 'use client';
-import { useGlobal } from '@/app/GlobalContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import SystemStatus from './error/SystemStatus';
+import { useEffect, useState } from 'react';
 import { getFullUrl } from '@/utils/helperFunctions';
+import { globalService } from '@/services/global.service';
+import { HeaderType } from '@/utils/types';
+import { handleApiError } from '@/utils/errorHandler';
 
 export default function Header() {
-  // global data from the Context
-  const { session, globalData } = useGlobal();
-
-  if (!globalData?.header) {
-    return (
-      <>
-        <SystemStatus message="Unable to connect to our content server." />
-      </>
-    );
-  }
-
-  const headerData = globalData?.header;
+  const [headerData, setHeaderData] = useState<HeaderType | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
+
+  // header  data
+  useEffect(() => {
+    globalService
+      .getData()
+      .then((data) => {
+        if (data) {
+          setHeaderData(data.header);
+        }
+      })
+      .catch((err) => handleApiError('Could not fetch global data', err));
+  }, []);
 
   // Accessible IDs for mobile disclosures
   const mobileMenuId = 'mobile-navigation-drawer';
@@ -39,44 +41,41 @@ export default function Header() {
           >
             <div className="relative w-8 h-8">
               <Image
-                src={getFullUrl(headerData?.logo?.image?.url)}
+                src={headerData ? getFullUrl(headerData?.logo?.image?.url) : '/default.png'}
                 alt=""
                 fill
                 className="object-contain"
               />
             </div>
             <span className="text-lg font-bold text-gray-900 hidden sm:block">
-              {headerData.logo.lable}
+              {headerData?.logo.lable}
             </span>
           </Link>
 
           {/* Desktop Nav Landmark */}
           <nav className="hidden md:flex items-center space-x-4" aria-label="Main Navigation">
-            {session &&
-              headerData?.navItems?.map((item) => {
-                const current = isActive(item.href);
-                return (
-                  <Link
-                    key={item.id}
-                    href={item.href}
-                    aria-current={current ? 'page' : undefined}
-                    className={`px-3 py-1 rounded-md text-sm font-medium transition-all outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600 ${
-                      current ? 'text-white bg-indigo-700' : 'text-gray-600 hover:text-gray-900'
-                    }`}
-                  >
-                    {item.lable}
-                  </Link>
-                );
-              })}
+            {headerData?.navItems?.map((item) => {
+              const current = isActive(item.href);
+              return (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  aria-current={current ? 'page' : undefined}
+                  className={`px-3 py-1 rounded-md text-sm font-medium transition-all outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600 ${
+                    current ? 'text-white bg-indigo-700' : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  {item.lable}
+                </Link>
+              );
+            })}
 
-            {!session && (
-              <Link
-                href={'/auth'}
-                className="px-3 py-1 rounded-md text-sm font-medium text-black bg-gray-100 transition-all outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-400"
-              >
-                sign in
-              </Link>
-            )}
+            <Link
+              href={'/auth'}
+              className="px-3 py-1 rounded-md text-sm font-medium text-black bg-gray-100 transition-all outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-400"
+            >
+              sign in
+            </Link>
           </nav>
 
           {/* Mobile Menu Toggle Button */}
@@ -139,14 +138,13 @@ export default function Header() {
               </Link>
             );
           })}
-          {!session && (
-            <Link
-              href={'/auth'}
-              className="block px-3 py-2 rounded-md text-base font-medium text-black bg-gray-100 text-center transition-all outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600"
-            >
-              sign in
-            </Link>
-          )}
+
+          <Link
+            href={'/auth'}
+            className="block px-3 py-2 rounded-md text-base font-medium text-black bg-gray-100 text-center transition-all outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600"
+          >
+            sign in
+          </Link>
         </nav>
       )}
     </header>

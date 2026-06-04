@@ -1,34 +1,45 @@
 'use client';
-import { createContext, useContext } from 'react';
-import { GlobalContextValue, GlobalData, SessionType } from '@/utils/types';
-import { FALLBACK_DATA } from '@/utils/Constants';
+
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { SessionType } from '@/utils/types';
+import { authClient } from '@/lib/auth-client';
+import { handleApiError } from '@/utils/errorHandler';
+
+interface GlobalContextValue {
+  session: SessionType | null;
+}
 
 const GlobalContext = createContext<GlobalContextValue | null>(null);
 
-export const GlobalProvider = ({
-  children,
-  data,
-  session,
-}: {
-  children: React.ReactNode;
-  data: GlobalData | null;
-  session: SessionType | null;
-}) => {
-  // fallback if data is null
+export const GlobalProvider = ({ children }: { children: ReactNode }) => {
+  const [session, setSession] = useState<SessionType | null>(null);
+
+  useEffect(() => {
+    async function initialize() {
+      try {
+        const { data: sessionData, error } = await authClient.getSession();
+        if (error) {
+          handleApiError('AuthSession', error, 'Failed to load your session.');
+          return;
+        }
+        setSession(sessionData);
+      } catch (err) {
+        handleApiError('GlobalProvider.initialize', err, 'An unexpected error occurred.');
+      }
+    }
+
+    initialize();
+  }, []);
+
   const value = {
-    globalData: data ?? FALLBACK_DATA,
     session,
-    isDbDown: data === null,
   };
 
   return <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>;
 };
 
-// GlobalProvider hook
 export const useGlobal = () => {
   const context = useContext(GlobalContext);
-  if (!context) {
-    throw new Error('useGlobal must be used within a GlobalProvider');
-  }
+  if (!context) throw new Error('useGlobal must be used within a GlobalProvider');
   return context;
 };
