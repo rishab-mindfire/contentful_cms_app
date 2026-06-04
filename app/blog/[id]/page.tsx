@@ -12,19 +12,13 @@ interface Props {
 
 export const revalidate = 10;
 export async function generateStaticParams() {
-  try {
-    const response = await getArticles(1, 50);
-    // Safety check: ensure response and data exist
-    if (!response?.data) return [];
+  // generate static page during build up to 50 dynamic blog pages
+  const response = await getArticles(1, 50);
+  const ids = response.data.map((article) => ({
+    id: article.documentId,
+  }));
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return response.data.map((article: any) => ({
-      id: article.documentId,
-    }));
-  } catch (error) {
-    console.error('Failed to fetch articles for static params, falling back to dynamic:', error);
-    return []; // Return empty array so build doesn't crash
-  }
+  return ids;
 }
 
 export const dynamicParams = true;
