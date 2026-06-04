@@ -1,25 +1,12 @@
-'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getFullUrl } from '@/utils/helperFunctions';
-import { FooterType } from '@/utils/types';
-import { useEffect, useState } from 'react';
 import { globalService } from '@/services/global.service';
-import { handleApiError } from '@/utils/errorHandler';
 
-export const Footer = () => {
-  const [footerData, setFooterData] = useState<FooterType | null>(null);
-
-  useEffect(() => {
-    globalService
-      .getData()
-      .then((data) => {
-        if (data?.footer) {
-          setFooterData(data.footer);
-        }
-      })
-      .catch((err) => handleApiError('Could not fetch global data', err));
-  }, []);
+export const Footer = async () => {
+  // Fetch data directly on the server
+  const data = await globalService.getData().catch(() => null);
+  const footerData = data?.footer;
 
   if (!footerData) return null;
 
@@ -38,6 +25,7 @@ export const Footer = () => {
                 alt={logo.lable ?? 'logo image'}
                 width={120}
                 height={40}
+                priority={true}
                 className="h-16 w-auto object-contain"
               />
             </Link>

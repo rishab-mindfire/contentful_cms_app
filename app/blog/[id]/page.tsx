@@ -102,7 +102,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
           <div className="text-center sm:text-left">
             <h2 className="text-lg font-bold text-gray-900">
-              By {article.author?.fullName || 'Staff Writer'}
+              By {article.author?.fullName || 'Anonymous'}
             </h2>
             <p className="text-gray-500 text-sm mt-1">
               {article.author?.bio || 'Expert contributor at our publication.'}
