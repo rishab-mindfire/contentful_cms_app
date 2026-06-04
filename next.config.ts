@@ -24,7 +24,7 @@ const nextConfig = {
       //strapi url
       {
         protocol: 'https',
-        hostname: 'strapi-backend-pm77.onrender.com',
+        hostname: 'https://strapi-backend-pm77.onrender.com/',
         port: '',
         pathname: '/uploads/**',
       },
