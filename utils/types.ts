@@ -332,3 +332,8 @@ export interface PricingResponse {
     };
   };
 }
+
+// Define an interface for errors that have a 'message' property
+export interface ErrorWithMessage {
+  message: string;
+}

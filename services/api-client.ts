@@ -1,10 +1,10 @@
 import { handleApiError } from '@/utils/errorHandler';
 
-// 1. Define the interface to allow custom 'query' property
+// Define the interface to allow custom 'query' property
 interface ApiRequestOptions extends RequestInit {
   query?: Record<string, string | number | boolean>;
 }
-
+// main interceptor for API calls
 export const apiClient = {
   get: async <T>(path: string, options: ApiRequestOptions = {}): Promise<T | null> => {
     const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, '');
@@ -13,10 +13,10 @@ export const apiClient = {
       throw new Error('NEXT_PUBLIC_STRAPI_URL is not defined');
     }
 
-    // 2. Build the URL object correctly
+    // Build the URL object correctly
     const url = new URL(`${baseUrl}/api${path.startsWith('/') ? path : `/${path}`}`);
 
-    // 3. Append query parameters properly (this encodes [ ] for you)
+    // Append query parameters properly
     if (options.query) {
       Object.entries(options.query).forEach(([key, value]) => {
         url.searchParams.append(key, String(value));
@@ -24,7 +24,7 @@ export const apiClient = {
     }
 
     try {
-      // 4. Use url.toString() here!
+      // Use url.toString() to parse my url in string
       const res = await fetch(url.toString(), {
         method: 'GET',
         ...options,
@@ -38,7 +38,7 @@ export const apiClient = {
       });
 
       if (!res.ok) {
-        // Optional: handle specific non-200 status codes here
+        // handle specific non-200 status codes
         return null;
       }
       return await res.json();
