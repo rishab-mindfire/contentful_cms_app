@@ -3,8 +3,10 @@ import { handleApiError } from '@/utils/errorHandler';
 // main api interceptor for Strapi API calls
 export const apiClient = {
   get: async <T>(path: string, options: RequestInit = {}): Promise<T | null> => {
+    const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
+
+    console.log('hello', baseUrl);
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
       const url = `${baseUrl}/api${path.startsWith('/') ? path : `/${path}`}`;
 
       const res = await fetch(url, {

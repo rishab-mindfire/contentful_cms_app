@@ -2,7 +2,7 @@ import { ArticlesApiResponse, SingleArticleApiResponse } from '@/utils/types';
 import { apiClient } from './api-client';
 import { handleApiError } from '@/utils/errorHandler';
 
-const REVALIDATE_TIME = 60;
+const REVALIDATE_TIME = 3660;
 const POSTS_PER_PAGE = 5;
 
 /**
