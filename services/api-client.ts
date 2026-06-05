@@ -5,7 +5,13 @@ export const apiClient = {
   get: async <T>(path: string, options: RequestInit = {}): Promise<T | null> => {
     const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 
-    console.log('hello', baseUrl);
+    if (!baseUrl) {
+      throw new Error('API Error: NEXT_PUBLIC_STRAPI_URL is not defined in environment variables.');
+    }
+
+    const url = `${baseUrl.replace(/\/$/, '')}/api${path.startsWith('/') ? path : `/${path}`}`;
+
+    console.log('Constructed URL:', url);
     try {
       const url = `${baseUrl}/api${path.startsWith('/') ? path : `/${path}`}`;
 
