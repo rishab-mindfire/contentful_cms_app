@@ -4,7 +4,7 @@ import { handleApiError } from '@/utils/errorHandler';
 interface ApiRequestOptions extends RequestInit {
   query?: Record<string, string | number | boolean>;
 }
-
+// main interceptor for API calls
 export const apiClient = {
   get: async <T>(path: string, options: ApiRequestOptions = {}): Promise<T | null> => {
     const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL?.replace(/\/$/, '');
