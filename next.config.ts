@@ -1,12 +1,10 @@
 /** @type {import('next').NextConfig} */
 
-// Do not use new URL() here. It is failing during the build phase.
-// Define your hostnames explicitly as strings.
 const nextConfig = {
   images: {
     unoptimized: process.env.NODE_ENV === 'development',
     remotePatterns: [
-      // 1. Localhost patterns
+      // Localhost patterns
       {
         protocol: 'http',
         hostname: 'localhost',
@@ -19,14 +17,14 @@ const nextConfig = {
         port: '1337',
         pathname: '/uploads/**',
       },
-      // 2. Your Production Render backend
+      // Production Render backend
       {
         protocol: 'https',
         hostname: 'strapi-backend-pm77.onrender.com',
         port: '',
         pathname: '/uploads/**',
       },
-      // 3. Third-party providers
+      // Third-party providers
       {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
