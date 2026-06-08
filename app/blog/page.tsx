@@ -14,6 +14,21 @@ export default async function BlogPage({ searchParams }: Props) {
   const { data: articles, meta } = response;
   const { pageCount } = meta.pagination;
 
+  if (response.data.length === 0) {
+    return (
+      <div
+        className="flex flex-col items-center justify-center text-center p-12 my-16 max-w-md mx-auto  bg-gray-50 border border-dashed border-gray-200 rounded-xl"
+        role="status"
+        aria-live="polite"
+      >
+        <h3 className="text-xl font-semibold text-gray-800 mb-2">No Posts Yet</h3>
+        <p className="text-sm text-gray-500浏览 leading-relaxed">
+          It looks like there aren't any blog posts available right now. Check back later!
+        </p>
+      </div>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-white py-12 px-6">
       <div className="max-w-4xl mx-auto">

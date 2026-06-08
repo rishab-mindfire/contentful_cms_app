@@ -85,6 +85,7 @@ export interface FooterType {
     image: ImageFormat;
   };
   socialLinks: SocialLink[];
+  CenterTextBlock: BlocksContent;
 }
 
 //login type
