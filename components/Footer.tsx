@@ -33,7 +33,7 @@ export const Footer = async () => {
           )}
 
           {/* markDown */}
-          <Markdown content={CenterTextBlock} />
+          <Markdown content={CenterTextBlock ?? []} />
 
           {/* Text and Socials */}
           <div className="flex flex-col items-center md:items-end gap-4 text-center md:text-right max-w-md">
