@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getFullUrl } from '@/utils/helperFunctions';
 import { globalService } from '@/services/global.service';
+import Markdown from './landing-blocks/Markdown';
 
 export const Footer = async () => {
   // Fetch data directly on the server
@@ -11,7 +12,7 @@ export const Footer = async () => {
   if (!footerData) return null;
 
   // Destructure footer
-  const { text = '', logo, socialLinks = [] } = footerData;
+  const { text = '', logo, socialLinks = [], CenterTextBlock } = footerData;
 
   return (
     <footer className="bg-gray-900 text-white py-12 mt-20 border-t border-gray-800">
@@ -30,6 +31,9 @@ export const Footer = async () => {
               />
             </Link>
           )}
+
+          {/* markDown */}
+          <Markdown content={CenterTextBlock} />
 
           {/* Text and Socials */}
           <div className="flex flex-col items-center md:items-end gap-4 text-center md:text-right max-w-md">
