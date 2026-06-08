@@ -85,7 +85,12 @@ export interface FooterType {
     image: ImageFormat;
   };
   socialLinks: SocialLink[];
-  CenterTextBlock: BlocksContent;
+  CenterTextBlock: [
+    {
+      type: 'paragraph';
+      children: [{ type: 'text'; text: 'Center block footer content here' }];
+    },
+  ];
 }
 
 //login type
