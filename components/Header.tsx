@@ -41,7 +41,11 @@ export default function Header() {
           >
             <div className="relative w-8 h-8">
               <Image
-                src={headerData ? getFullUrl(headerData?.logo?.image?.url) : '/default.png'}
+                src={
+                  headerData?.logo?.image?.url
+                    ? getFullUrl(headerData?.logo?.image?.url)
+                    : '/default.png'
+                }
                 alt=""
                 fill
                 className="object-contain"
