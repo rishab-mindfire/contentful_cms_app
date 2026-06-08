@@ -13,7 +13,7 @@ export default async function LandingPage() {
         role="status"
         aria-live="polite"
       >
-        <h1 className="text-xl font-semibold text-gray-900 mb-2">No Section added !</h1>
+        <h1 className="text-xl font-semibold text-gray-900 mb-2">No Section added for Landing !</h1>
         <p className="text-sm text-gray-500 leading-relaxed">
           We couldn't load the landing section now. Please refresh the page or try again later.
         </p>
