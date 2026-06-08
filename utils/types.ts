@@ -85,10 +85,10 @@ export interface FooterType {
     image: ImageFormat;
   };
   socialLinks: SocialLink[];
-  CenterTextBlock: [
+  CenterTextBlock?: [
     {
       type: 'paragraph';
-      children: [{ type: 'text'; text: 'Center block footer content here' }];
+      children: [{ type: 'text'; text: string }];
     },
   ];
 }
